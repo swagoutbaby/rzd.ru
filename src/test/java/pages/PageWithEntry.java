@@ -1,6 +1,5 @@
 package pages;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.cssValue;
@@ -28,7 +27,6 @@ public class PageWithEntry {
 
     public PageWithEntry openPage () {
         open("");
-        Selenide.sleep(3000);
         return this;
     }
 
