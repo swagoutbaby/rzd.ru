@@ -56,13 +56,13 @@ public class PageWithEntry {
         return this;
     }
 
-    public PageWithEntry checkErrorLogin (String value) {
+    public PageWithEntry checkErrorEmptyLogin (String value) {
         errorEmptyLogin.shouldHave(text(value));
         errorEmptyLogin.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithEntry checkErrorPassword (String value) {
+    public PageWithEntry checkErrorEmptyPassword(String value) {
         errorEmptyPassword.shouldHave(text(value));
         errorEmptyPassword.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;

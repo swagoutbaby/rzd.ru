@@ -59,10 +59,18 @@ public class RegistrationAndLoginTest extends TestBase {
                 .loginInput("")
                 .passwordInput("")
                 .entryButtonClick()
-                .checkErrorLogin("Это поле необходимо заполнить")
-                .checkErrorPassword("Это поле необходимо заполнить");
+                .checkErrorEmptyLogin("Это поле необходимо заполнить")
+                .checkErrorEmptyPassword("Это поле необходимо заполнить");
     }
 
     // Тестирование формы регистрации
 
+//    @Test
+//    @DisplayName("Регистрация. Пустое поле ввода логина и пароля")
+//    @Tag("smoke")
+//    void RegisterSuccessTest() {
+//        pageWithRegistration
+//                .
+//
+//    }
 }
