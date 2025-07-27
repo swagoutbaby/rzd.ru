@@ -15,7 +15,7 @@ public class PageWithEntry {
 
     private final SelenideElement
     pressEntry = $(".j-auth-open.username"),
-    headerInput = $(".j-tab.form-tab_link.active"),
+    header = $(".j-tab.form-tab_link.active"),
     login = $("[placeholder=Логин]"),
     password = $("[placeholder=Пароль]"),
     entryButton = $(byTagAndText("button", "Войти")),
@@ -38,8 +38,8 @@ public class PageWithEntry {
     }
 
     public PageWithEntry checkHeader (String value) {
-        headerInput.shouldHave(text(value));
-        headerInput.shouldBe(cssValue("color", "rgba(226, 26, 26, 1)"));
+        header.shouldHave(text(value));
+        header.shouldBe(cssValue("color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
