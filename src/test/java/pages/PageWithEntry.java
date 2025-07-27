@@ -19,8 +19,8 @@ public class PageWithEntry {
     login = $("[placeholder=Логин]"),
     password = $("[placeholder=Пароль]"),
     entryButton = $(byTagAndText("button", "Войти")),
-    errorEmptyLoginInput = $("[placeholder=Логин]").sibling(0),
-    errorEmptyPasswordInput = $("[placeholder=Пароль]").sibling(0),
+    errorEmptyLogin = $("[placeholder=Логин]").sibling(0),
+    errorEmptyPassword = $("[placeholder=Пароль]").sibling(0),
     errorEntryMessage = $(".auth-error"),
     profileButton = $(".j-profile-username"),
     myProfile = $(".page-menu__title");
@@ -59,14 +59,14 @@ public class PageWithEntry {
     }
 
     public PageWithEntry checkErrorLogin (String value) {
-        errorEmptyLoginInput.shouldHave(text(value));
-        errorEmptyLoginInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
+        errorEmptyLogin.shouldHave(text(value));
+        errorEmptyLogin.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
     public PageWithEntry checkErrorPassword (String value) {
-        errorEmptyPasswordInput.shouldHave(text(value));
-        errorEmptyPasswordInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
+        errorEmptyPassword.shouldHave(text(value));
+        errorEmptyPassword.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
