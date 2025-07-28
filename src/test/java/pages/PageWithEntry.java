@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class PageWithEntry {
 
     private final SelenideElement
-    pressEntry = $(".j-auth-open.username"),
+    pressEntry = $(".j-auth-open.username"), CookieButton = $(".cookie-alert__btn"),
     header = $(".j-tab.form-tab_link.active"),
     login = $("[placeholder=Логин]"),
     password = $("[placeholder=Пароль]"),
@@ -27,6 +27,14 @@ public class PageWithEntry {
 
     public PageWithEntry openPage () {
         open("");
+        return this;
+    }
+
+    public PageWithEntry closeCookie() {
+        if (CookieButton.isDisplayed())
+        {
+            CookieButton.click();
+        }
         return this;
     }
 
