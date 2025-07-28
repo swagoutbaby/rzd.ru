@@ -25,7 +25,7 @@ public class FakerUtil {
     }
 
     public static String generatePassword() {
-        return faker.internet().password(8, 10); // Пароль длиной от 8 до 10 символов
+        return faker.internet().password(8, 10) + "-"; // Пароль длиной от 8 до 10 символов
     }
 
     public static String generateInvalidPassword() {
@@ -35,7 +35,7 @@ public class FakerUtil {
     public static String generateLogin() {
         String firstName = faker.name().firstName(); // Логин
         String lastName = faker.name().lastName();
-        return firstName.substring(0, 1).toLowerCase() + lastName.toLowerCase();
+        return firstName.substring(0, 1).toLowerCase() + lastName.toLowerCase() + "mcgee";
     }
 
     public static String generateInvalidLogin() {
@@ -61,6 +61,6 @@ public class FakerUtil {
 
     public static String generateInvalidLastName() {
         // Генерация некорректной фамилии
-        return faker.name().lastName();
+        return faker.number().digits(5);
     }
 }
