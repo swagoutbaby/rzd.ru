@@ -25,7 +25,6 @@ public class PageWithRegistration {
             lastName = $("[data-test-id=registration-lastName]"),
             number = $("[data-test-id=registration-phone]"),
             agreement = $("span.check__label.static-content"),
-            agreementClicked = $(byTagAndText("label", "Требуется согласие")),
             captcha = $("[data-test-id=registration-captcha]"),
             registerButton = $("[data-test-id=registration-register]"),
             errorEmailInput = $("[data-test-id=registration-email]").sibling(0),
