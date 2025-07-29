@@ -22,7 +22,8 @@ public class PageWithEntry {
     errorEmptyPassword = $("[placeholder=Пароль]").sibling(0),
     errorEntryMessage = $(".auth-error"),
     profileButton = $(".j-profile-username"),
-    myProfile = $(".page-menu__title");
+    myProfile = $(".page-menu__title"),
+    logout = $(".j-profile-logout");
 
 
     public PageWithEntry openPage () {
@@ -90,6 +91,10 @@ public class PageWithEntry {
 
     public PageWithEntry checkAutorization (String value) {
         myProfile.shouldHave(text(value));
+        return this;
+    }
+    public PageWithEntry logoutClick () {
+        logout.click();
         return this;
     }
 }

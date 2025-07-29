@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.*;
@@ -14,51 +15,78 @@ public class PageWithHome {
             CookieButton = $(".cookie-alert__btn"),
 
             // Первый хедер
-            passengers = $("#logo-menu_wrap").$(byTagAndText("a", "Пассажирам")),
-            freightTransportation = $("$(#logo-menu_wrap").$(byTagAndText("a", "Пассажирам")),
-            company = $("$(#logo-menu_wrap").$(byTagAndText("a", "Компания")),
-            workInRZD = $("$(#logo-menu_wrap").$(byTagAndText("a", "Работа в РЖД")),
-            contacts = $("$(#logo-menu_wrap").$(byTagAndText("a", "контакты")),
+            passengers = $(".header_site").$(byTagAndText("a", "Пассажирам")),
+            freightTransportation = $(".header_site").$(byTagAndText("a", "Грузовые перевозки")),
+            company = $(".header_site").$(byTagAndText("a", "Компания")),
+            workInRZD = $(".header_site").$(byTagAndText("a", "Работа в РЖД")),
+            contacts = $(".header_site").$(byTagAndText("a", "Контакты")),
             visuallyImpaired = $(".blind__text"),
+            regularSite = $(".settings-wrap").$(byTagAndText("span", "Обычная версия сайта")),
             pressEntry = $(".j-auth-open.username"),
+            cancelEntry = $(byTagAndText("a", "Отмена")),
             switchLanguageButton = $(".j-locale-select-open"),
-            switchLanguage = $(".locale-switch-wrap.locate-switch"),
+            switchLanguage = $(".locale-switch__li"),
             search = $(".icon-search"),
 
-            // Второй хедер
+            pageFreightTransportation = $(".body-page-92162"),
+            pageCompany = $(".body-page-31560"),
+            pageWorkInRZD = $(".bg-white"),
+            pageContacts = $(".body-page-100162"),
+            pageVisuallyImpaired = $(byTagAndText("span", "Обычная версия сайта")),
+            header = $(".j-tab.form-tab_link.active"),
+            openSearch = $(".menu-search-btn"),
+            closeSearch = $(".menu-search-close"),
+
+    // Второй хедер
             buyTicket = $("[data-test-id=block_4]").$(byTagAndText("a", "Купить билет")),
+
             trainsAndRoutes = $("[data-test-id=block_4]").$(byTagAndText("a", "Поезда и маршруты")),
             trainsAndRoutesDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Поезда и маршруты"))
                     .sibling(0).$(".j-menu-open"),
             trainsAndRoutesDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Поезда и маршруты"))
                     .sibling(0).$(".menu-list.j-menu"),
+            trainsAndRoutesPage = $(".nav-header__title"),
+
             trainStations = $("[data-test-id=block_4]").$(byTagAndText("a", "Вокзалы")),
+            trainStationsPage = $(".highlight"),
+
             tariffsAndAction = $("[data-test-id=block_4]").$(byTagAndText("a", "Тарифы и акции")),
             tariffsAndActionDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Тарифы и акции"))
                     .sibling(0).$(".j-menu-open"),
             tariffsAndActionDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Тарифы и акции"))
                     .sibling(0).$(".menu-list.j-menu"),
+            TariffsAndActionPage = $(".nav-header__title"),
+
             uslugsAndServices = $("[data-test-id=block_4]").$(byTagAndText("a", "Услуги и сервисы")),
             uslugsAndServicesDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Услуги и сервисы"))
                     .sibling(0).$(".j-menu-open"),
             uslugsAndServicesDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Услуги и сервисы"))
                     .sibling(0).$(".menu-list.j-menu"),
+            uslugsAndServicesPage = $(".nav-header__title"),
+
             rzdBonus = $("[data-test-id=block_4]").$(byTagAndText("a", "РЖД Бонус")),
             rzdBonusDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "РЖД Бонус"))
                     .sibling(0).$(".j-menu-open"),
             rzdBonusDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "РЖД Бонус"))
                     .sibling(0).$(".menu-list.j-menu"),
+            rzdBonusPage = $(".fp-viewing-main"),
+
             rules = $("[data-test-id=block_4]").$(byTagAndText("a", "Правила")),
             rulesDroplistButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Правила"))
                     .sibling(0).$(".j-menu-open"),
             rulesDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Правила"))
                     .sibling(0).$(".menu-list.j-menu"),
+            rulesPage = $(".nav-header__title"),
+
             info = $("[data-test-id=block_4]").$(byTagAndText("a", "Информация")),
             infoDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Информация"))
                     .sibling(0).$(".j-menu-open"),
             infoDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Информация"))
                     .sibling(0).$(".menu-list.j-menu"),
+            infoPage = $(".nav-header__title"),
+
             siteMap = $("[data-test-id=block_4]").$(byTagAndText("a", "Карта сайта")),
+            siteMapPage = $(".nav-header__title"),
 
             // Форма поиска маршрутов
             cityFrom = $("[aria-label=Изменить станцию отправления.]"),
@@ -86,16 +114,19 @@ public class PageWithHome {
             // Хедеры и блоки которые охватывают большое количество элементов
             logoHeader = $("#logo-menu_wrap"),
             actionsHeader = $("[data-test-id=block_4]"),
-            topBlock = $(".header.header_index."),
+            topBlock = $(".header.header_index"),
             mainBlock = $(".block-page__container"),
             contactsBlock = $(".contacts.section_item"),
             mobileBlock = $(".ekmp.section_item.text-white"),
             lowerBlock = $(".site-map.section_item"),
+            lowestBlockLicenses = $(".media.section_item.media-line"),
     
-            onlineChat = $("#online_chat"), // Онлайн чат с виртуальным помощником
+            onlineChat = $(".chat__icon"), // Онлайн чат с виртуальным помощником
             mainChat = $(".main_chat"),
-            InputMessage = $("[placeholder=Введите сообщение]"),
-            SendMessageButton = $("[title=Отправить]");
+            inputMessage = $(".chat.chat__open").$("[name=text]"),
+            sendMessageButton = $("[title=Отправить]");
+
+
 
 
     public PageWithHome openPage() {
@@ -111,47 +142,63 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome checkPassengers() {
-        passengers.shouldBe(visible);
+    public PageWithHome clickPassengers() {
+        passengers.click();
         return this;
     }
 
-    public PageWithHome checkFreightTransportation() {
-        freightTransportation.shouldBe(visible);
+    public PageWithHome clickFreightTransportation() {
+        freightTransportation.click();
+        Selenide.sleep(3000);
         return this;
     }
 
-    public PageWithHome checkCompany() {
-        company.shouldBe(visible);
+    public PageWithHome clickCompany() {
+        company.click();
+        Selenide.sleep(3000);
         return this;
     }
 
-    public PageWithHome checkWorkInRZD() {
-        workInRZD.shouldBe(visible);
+    public PageWithHome clickWorkInRZD() {
+        workInRZD.click();
+        Selenide.sleep(3000);
         return this;
     }
 
-    public PageWithHome checkContacts() {
-        contacts.shouldBe(visible);
+    public PageWithHome clickContacts() {
+        contacts.click();
+        Selenide.sleep(3000);
         return this;
     }
 
-    public PageWithHome checkVisuallyImpaired() {
-        visuallyImpaired.shouldBe(visible);
+    public PageWithHome clickVisuallyImpaired() {
+        visuallyImpaired.click();
+        Selenide.sleep(3000);
         return this;
     }
 
-    public PageWithHome checkEntry() {
-        pressEntry.shouldBe(visible);
+    public PageWithHome clickRegularSite() {
+        regularSite.click();
+        Selenide.sleep(3000);
         return this;
     }
 
-    public PageWithHome checkSearch() {
-        search.shouldBe(visible);
+    public PageWithHome clickEntry() {
+        pressEntry.click();
         return this;
     }
 
-    public PageWithHome SwitchLanguageToEng() {
+    public PageWithHome clickCancelEntry() {
+        cancelEntry.click();
+        return this;
+    }
+
+    public PageWithHome clickSearch() {
+        search.click();
+        return this;
+    }
+
+    public PageWithHome switchLanguage() {
         switchLanguageButton.click();
         switchLanguage.click();
         return this;
@@ -164,6 +211,11 @@ public class PageWithHome {
 
     public PageWithHome trainsAndRoutesClick() {
         trainsAndRoutes.click();
+        return this;
+    }
+
+    public PageWithHome checkTrainsAndRoutes() {
+        trainsAndRoutesPage.shouldHave(text("Поезда и маршруты"));
         return this;
     }
 
@@ -182,6 +234,11 @@ public class PageWithHome {
         return this;
     }
 
+    public PageWithHome checkTrainStations() {
+        trainStationsPage.shouldHave(text("Вокзалы"));
+        return this;
+    }
+
     public PageWithHome tariffsAndActionClick() {
         tariffsAndAction.click();
         return this;
@@ -197,6 +254,12 @@ public class PageWithHome {
         return this;
     }
 
+    public PageWithHome checkTariffsAndActionPage() {
+        TariffsAndActionPage.shouldHave(text("Тарифы и акции"));
+        return this;
+    }
+
+
     public PageWithHome uslugsAndServicesClick() {
         uslugsAndServices.click();
         return this;
@@ -209,6 +272,11 @@ public class PageWithHome {
 
     public PageWithHome checkUslugsAndServicesDropList(String value) {
         uslugsAndServicesDropList.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkUslugsAndServicesPage() {
+        uslugsAndServicesPage.shouldHave(text("Услуги и сервисы"));
         return this;
     }
 
@@ -227,6 +295,11 @@ public class PageWithHome {
         return this;
     }
 
+    public PageWithHome checkRzdBonusPage() {
+        rzdBonusPage.shouldHave(text("РЖД Бонус"));
+        return this;
+    }
+
     public PageWithHome rulesClick() {
         rules.click();
         return this;
@@ -239,6 +312,11 @@ public class PageWithHome {
 
     public PageWithHome checkRulesDropList(String value) {
         rulesDropList.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkRulesPage() {
+        rulesPage.shouldHave(text("Правила"));
         return this;
     }
 
@@ -257,8 +335,18 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome siteMapClick(String value) {
+    public PageWithHome checkInfoPage() {
+        infoPage.shouldHave(text("Информация"));
+        return this;
+    }
+
+    public PageWithHome siteMapClick() {
         siteMap.click();
+        return this;
+    }
+
+    public PageWithHome checkSiteMap() {
+        siteMap.shouldHave(text("Карта сайта"));
         return this;
     }
 
@@ -289,7 +377,7 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome checkNumberOfPassengers() {
+    public PageWithHome clickNumberOfPassengers() {
         numberOfPassengers.click();
         return this;
     }
@@ -358,6 +446,16 @@ public class PageWithHome {
         return this;
     }
 
+    public PageWithHome checkActionsHeader(String value) {
+        actionsHeader.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkLogoHeader(String value) {
+        logoHeader.shouldHave(text(value));
+        return this;
+    }
+
     public PageWithHome checkTopBlock(String value) {
         topBlock.shouldHave(text(value));
         return this;
@@ -383,22 +481,85 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome checkActionsHeader(String value) {
-        actionsHeader.shouldHave(text(value));
+    public PageWithHome checkLowestBlockLicenses(String value) {
+        lowestBlockLicenses.shouldHave(text(value));
         return this;
     }
 
-    public PageWithHome checkLogoHeader(String value) {
-        logoHeader.shouldHave(text(value));
-        return this;
-    }
-
-    public PageWithHome checkOnlineChat(String preparedText, String message) {
+    public PageWithHome onlineChatClick() {
         onlineChat.click();
-        mainChat.shouldHave(text(preparedText));
-        InputMessage.setValue(message);
-        SendMessageButton.click();
-        mainChat.shouldHave(text(message));
+        return this;
+    }
+
+    public PageWithHome checkOnlineChat(String value) {
+        mainChat.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome sendMessageOnlineChat(String message) {
+        inputMessage.setValue(message);
+        sendMessageButton.click();
+        Selenide.sleep(6000);
+        return this;
+    }
+
+    public PageWithHome chooseThemeOnlineChat(String theme) {
+        $(byTagAndText("button", theme)).click();
+        return this;
+    }
+
+    public PageWithHome checkHomePage() {
+        passengers.shouldHave(text("Пассажирам"));
+        return this;
+    }
+
+    public PageWithHome checkPageFreightTransportation(String value) {
+        pageFreightTransportation.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkPageCompany(String value) {
+        pageCompany.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkPageWorkInRZD(String value) {
+        pageWorkInRZD.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkPageContacts(String value) {
+        pageContacts.shouldHave(text(value));
+        return this;
+    }
+
+    public PageWithHome checkVisuallyImpaired() {
+        pageVisuallyImpaired.shouldHave(text("Обычная версия сайта"));
+        return this;
+    }
+
+    public PageWithHome checkEntryHeader() {
+        header.shouldHave(text("Вход"));
+        return this;
+    }
+
+    public PageWithHome checkEngLanguage() {
+        logoHeader.shouldHave(text("Passengers"));
+        return this;
+    }
+
+    public PageWithHome checkRusLanguage() {
+        passengers.shouldHave(text("Пассажирам"));
+        return this;
+    }
+
+    public PageWithHome checkOpenSearch() {
+        openSearch.shouldHave(text("Найти"));
+        return this;
+    }
+
+    public PageWithHome closeSearch() {
+        closeSearch.click();
         return this;
     }
 }
