@@ -1,5 +1,6 @@
 package tests;
 
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -160,7 +161,7 @@ public class HomeTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Проверка работы виртуального помощника")
+    @DisplayName("Проверка работы кнопок верхней подстроки")
     @Tag("smoke")
     void actionsHeaderTest() {
         pageWithHome
@@ -206,12 +207,86 @@ public class HomeTests extends TestBase {
 
                 .siteMapClick()
                 .checkSiteMap();
+    }
 
+    @Test
+    @DisplayName("Проверка работы поиска маршрута")
+    @Tag("smoke")
+    void routeSearchTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
 
+                .cityFromInput("Москва")
+                .cityWhereInput("Казань")
+                .chooseDepartureDate("8/15/2025")
+                .chooseReturnDate("8/30/2025")
+//                .plusCountAdult(1) // Один взрослый по умолчанию, +1 Итого: 2 взрослых
+//                .minusCountAdult(1)
+//                .plusCountBabyWithPlace(2)
+//                .plusCountBabyWithPlace(2)
+//                .minusCountBabyWithPlace(1)
+//                .plusCountBabyWithoutPlace(2)
+//                .minusCountBabyWithoutPlace(1)
+                .clickFindRoute()
+                .checkRoutePage("Москва", "Казань", " 15 авг., пт ");
+    }
 
+    @Test
+    @DisplayName("Проверка работы поиска маршрута. Валидные значения")
+    @Tag("smoke")
+    void routeValidSearchTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
 
+                .cityFromInput("Москва")
+                .cityWhereInput("Казань")
+                .chooseDepartureDate("8/15/2025")
+                .chooseReturnDate("8/30/2025")
+//                .plusCountAdult(1) // Один взрослый по умолчанию, +1 Итого: 2 взрослых
+//                .minusCountAdult(1)
+//                .plusCountBabyWithPlace(2)
+//                .plusCountBabyWithPlace(2)
+//                .minusCountBabyWithPlace(1)
+//                .plusCountBabyWithoutPlace(2)
+//                .minusCountBabyWithoutPlace(1)
+                .clickFindRoute()
+                .checkRoutePage("Москва", "Казань", " 15 авг., пт ");
+    }
 
+    @Test
+    @DisplayName("Проверка работы поиска маршрута. В один и тот же город")
+    @Tag("smoke")
+    void routeInvalidSearchTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
 
+                .cityFromInput("Москва")
+                .cityWhereInput("Москва")
+                .chooseDepartureDate("8/15/2025")
+                .chooseReturnDate("8/30/2025")
+//                .plusCountAdult(1) // Один взрослый по умолчанию, +1 Итого: 2 взрослых
+//                .minusCountAdult(1)
+//                .plusCountBabyWithPlace(2)
+//                .plusCountBabyWithPlace(2)
+//                .minusCountBabyWithPlace(1)
+//                .plusCountBabyWithoutPlace(2)
+//                .minusCountBabyWithoutPlace(1)
+                .clickFindRoute()
+                .checkInvalidRoutePage("Прямых железнодорожных рейсов по маршруту Москва", "— Москва на", "15 августа не найдено.");
+    }
+
+    @Test
+    @DisplayName("Проверка перехода на travel.RZD")
+    @Tag("smoke")
+    void findHotelTravelRZDTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
+
+                .checkFindHotel("https://travel.rzd.ru/?utm_source=rzd_checkbox_all&utm_medium=referral&utm_campaign=hotels");
     }
 
     @Test

@@ -2,11 +2,19 @@ package pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-
+import com.codeborne.selenide.WebDriverThreadLocalContainer;
+import com.codeborne.selenide.selector.ByDeepShadowCss;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byTagAndText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selectors.shadowDeepCss;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverConditions.currentFrameUrl;
+import static com.codeborne.selenide.WebDriverConditions.url;
+import static org.junit.jupiter.api.Assertions.fail;
+
 
 
 public class PageWithHome {
@@ -89,27 +97,34 @@ public class PageWithHome {
             siteMapPage = $(".nav-header__title"),
 
             // Форма поиска маршрутов
-            cityFrom = $("[aria-label=Изменить станцию отправления.]"),
+            cityFrom = $(shadowDeepCss("[formcontrolname=fromNode]")).$(byTagName("input")),
             swapCityButton = $(".route-search__swapper"),
-            cityWhere = $("[aria-label=Изменить станцию назначения.]"),
-            departureDate = $("[aria-label=Изменить дату отправления.]"),
-            returnDate = $("[aria-label=Изменить дату обратного отправления.]"),
-            numberOfPassengers = $(".search-panel-options__dropdown-opened"),
+            cityWhere = $(shadowDeepCss("[formcontrolname=toNode]")).$(byTagName("input")),
+            departureDate = $(shadowDeepCss("[controlname=fromDate]")).$(byTagName("input")),
+            returnDate = $(shadowDeepCss("[controlname=backDate]")).$(byTagName("input")),
+            numberOfPassengers = $(shadowDeepCss(".search-panel-options.__dropdown-opened")),
             dropdownPassengersList = $(".search-panel-options__dropdown"),
-            minusAdultPassenger = $("[formcontrolname=adult]").$(".counter__button"),
-            plusAdultPassenger = $("[formcontrolname=adult]").$(".counter__button").sibling(1),
-            minusBabyWithPlace = $("[formcontrolname=babyWithPlace]").$(".counter__button"),
-            plusBabyWithPlace = $("[formcontrolname=babyWithPlace]").$(".counter__button").sibling(1),
-            minusBabyWithoutPlace = $("[formcontrolname=babyWithoutPlace]").$(".counter__button"),
-            plusBabyWithoutPlace = $("[formcontrolname=babyWithoutPlace]").$(".counter__button").sibling(1),
+
+            minusAdultPassenger = $(shadowDeepCss("[formcontrolname=adult]")).$(shadowDeepCss(".counter__button")),
+            plusAdultPassenger = $(shadowDeepCss("[formcontrolname=adult]")).$(shadowDeepCss(".counter__button")).sibling(1),
+
+//            plusBabyWithPlace = $(shadowDeepCss("[formcontrolname=babyWithPlace]")).$(shadowDeepCss(".counter__button")).sibling(1),
+//            minusBabyWithPlace = $(shadowDeepCss("[formcontrolname=babyWithPlace]")).$(shadowDeepCss(".counter__button")),
+//
+//            plusBabyWithoutPlace =
+//            minusBabyWithoutPlace =
+
             forInvalid = $("[formcontrolname=disabledPerson]"),
-            findRoute = $(byTagAndText("div", " Найти ")),
+
+            findRoute = $(shadowDeepCss(".route-search__submit-button")),
+            routePage = $(".searchresults__list"),
+            invalidRoutePage = $(".searchresults__cards-wrapper"),
 
 
             // Поиск отеля на Travel.RZD
-            findHotel = $(byTagAndText("div", " Найти отель на ")),
-            findHotelCheckbox = $(".rzd-search-widget__hotels.checkbox__box-container"),
-            findHotelCheckboxChecked = $(".rzd-search-widget__hotels.checkbox__box--checked"),
+            findHotelClick = $(shadowDeepCss(".checkbox-text")),
+            clickTravelRZD = $(shadowDeepCss(".checkbox-text")).$(byText("Travel.RZD")),
+            findHotelCheckedCheckbox = $(shadowDeepCss(".checkbox__box.checkbox__box--checked")),
 
             // Хедеры и блоки которые охватывают большое количество элементов
             logoHeader = $("#logo-menu_wrap"),
@@ -138,6 +153,7 @@ public class PageWithHome {
         if (CookieButton.isDisplayed())
         {
             CookieButton.click();
+            Selenide.sleep(2000);
         }
         return this;
     }
@@ -346,12 +362,13 @@ public class PageWithHome {
     }
 
     public PageWithHome checkSiteMap() {
-        siteMap.shouldHave(text("Карта сайта"));
+        siteMapPage.shouldHave(text("Карта сайта"));
         return this;
     }
 
     public PageWithHome cityFromInput(String value) {
         cityFrom.setValue(value);
+        Selenide.sleep(500);
         return this;
     }
 
@@ -362,18 +379,27 @@ public class PageWithHome {
 
     public PageWithHome cityWhereInput(String value) {
         cityWhere.setValue(value);
+        Selenide.sleep(500);
         return this;
     }
 
-    public PageWithHome chooseDepartureDate(String value) {
+    public PageWithHome chooseDepartureDate(String date) {
         departureDate.click();
-        $("[aria-label=" + value + "]").click();
+        String day = date.substring(0, 1);
+        String month = date.substring(2, 4);
+        String year = date.substring(5, 9);
+        $(shadowDeepCss(".ui-kit-datepicker")).$(shadowDeepCss("[data-testid='ui-kit-day_"
+                + day + "\\/" + month + "\\/" + year + "']")).click();
         return this;
     }
 
-    public PageWithHome chooseReturnDate(String value) {
+    public PageWithHome chooseReturnDate(String date) {
         returnDate.click();
-        $("[aria-label=" + value + "]").click();
+        String day = date.substring(0, 1);
+        String month = date.substring(2, 4);
+        String year = date.substring(5, 9);
+        $(shadowDeepCss(".ui-kit-datepicker")).$(shadowDeepCss("[data-testid='ui-kit-day_"
+                + day + "\\/" + month + "\\/" + year + "']")).click();
         return this;
     }
 
@@ -384,6 +410,31 @@ public class PageWithHome {
 
     public PageWithHome clickFindRoute() {
         findRoute.click();
+        Selenide.sleep(4000);
+        return this;
+    }
+
+    public PageWithHome checkRoutePage(String from, String where, String date) {
+        routePage.shouldHave(text(from));
+        routePage.shouldHave(text(where));
+        routePage.shouldHave(text(date));
+        return this;
+    }
+
+    public PageWithHome checkInvalidRoutePage(String from, String where, String date) {
+        invalidRoutePage.shouldHave(text(from));
+        invalidRoutePage.shouldHave(text(where));
+        invalidRoutePage.shouldHave(text(date));
+        return this;
+    }
+
+    public PageWithHome checkFindHotel(String url) {
+        findHotelClick.shouldBe(visible);
+        findHotelClick.click();
+        findHotelCheckedCheckbox.shouldBe(visible);
+        clickTravelRZD.click();
+        switchTo().window(1);
+        webdriver().shouldHave(url(url));
         return this;
     }
 
@@ -406,43 +457,36 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome plusCountBabyWithPlace(Integer value) {
-        for (int i = 0; i < value; i++) {
-            plusBabyWithPlace.click();
-        }
-        return this;
-    }
+//    public PageWithHome plusCountBabyWithPlace(Integer value) {
+//        for (int i = 0; i < value; i++) {
+//            plusBabyWithPlace.click();
+//        }
+//        return this;
+//    }
+//
+//    public PageWithHome minusCountBabyWithPlace(Integer value) {
+//        for (int i = 0; i < value; i++) {
+//            minusBabyWithPlace.click();
+//        }
+//        return this;
+//    }
 
-    public PageWithHome minusCountBabyWithPlace(Integer value) {
-        for (int i = 0; i < value; i++) {
-            minusBabyWithPlace.click();
-        }
-        return this;
-    }
+//    public PageWithHome plusCountBabyWithoutPlace(Integer value) {
+//        for (int i = 0; i < value; i++) {
+//            plusBabyWithoutPlace.click();
+//        }
+//        return this;
+//    }
 
-    public PageWithHome plusCountBabyWithoutPlace(Integer value) {
-        for (int i = 0; i < value; i++) {
-            plusBabyWithoutPlace.click();
-        }
-        return this;
-    }
-
-    public PageWithHome minusCountBabyWithoutPlace(Integer value) {
-        for (int i = 0; i < value; i++) {
-            minusBabyWithoutPlace.click();
-        }
-        return this;
-    }
+//    public PageWithHome minusCountBabyWithoutPlace(Integer value) {
+//        for (int i = 0; i < value; i++) {
+//            minusBabyWithoutPlace.click();
+//        }
+//        return this;
+//    }
 
     public PageWithHome chooseInvalid() {
         forInvalid.click();
-        return this;
-    }
-
-    public PageWithHome checkFindHotel() {
-        findHotel.shouldHave(visible);
-        findHotelCheckbox.click();
-        findHotelCheckboxChecked.shouldBe(visible);
         return this;
     }
 
