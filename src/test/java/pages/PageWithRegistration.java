@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class PageWithRegistration {
 
     private final SelenideElement
-            CookieButton = $(".cookie-alert__btn"),
+            сookieButton = $(".cookie-alert__btn"),
             pressEntry = $(".j-auth-open.username"),
             pressRegistration = $("[data-test-id=tab-registration]"),
             header = $(".form-tab_link.j-tab.active"),
@@ -27,6 +27,7 @@ public class PageWithRegistration {
             agreement = $("span.check__label.static-content"),
             captcha = $("[data-test-id=registration-captcha]"),
             registerButton = $("[data-test-id=registration-register]"),
+
             errorEmailInput = $("[data-test-id=registration-email]").sibling(0),
             errorLoginInput = $("[data-test-id=registration-login]").sibling(0),
             errorPasswordInput = $("[data-test-id=registration-password]").sibling(0),
@@ -46,9 +47,9 @@ public class PageWithRegistration {
     }
 
     public PageWithRegistration closeCookie() {
-        if (CookieButton.isDisplayed())
+        if (сookieButton.isDisplayed())
         {
-            CookieButton.click();
+            сookieButton.click();
         }
         return this;
     }
@@ -63,44 +64,44 @@ public class PageWithRegistration {
         return this;
     }
 
-    public PageWithRegistration checkHeader (String value) {
-        header.shouldHave(text(value));
+    public PageWithRegistration checkHeader (String headerText) {
+        header.shouldHave(text(headerText));
         header.shouldBe(cssValue("color", "rgba(226, 26, 26, 1)"));;
         return this;
     }
 
-    public PageWithRegistration emailInput(String value) {
-        email.setValue(value);
+    public PageWithRegistration emailInput(String Email) {
+        email.setValue(Email);
         return this;
     }
 
-    public PageWithRegistration loginInput(String value) {
-        login.setValue(value);
+    public PageWithRegistration loginInput(String Login) {
+        login.setValue(Login);
         return this;
     }
 
-    public PageWithRegistration passwordInput(String value) {
-        password.setValue(value);
+    public PageWithRegistration passwordInput(String Password) {
+        password.setValue(Password);
         return this;
     }
 
-    public PageWithRegistration passwordConfirmInput(String value) {
-        passwordConfirm.setValue(value);
+    public PageWithRegistration passwordConfirmInput(String PasswordConfirm) {
+        passwordConfirm.setValue(PasswordConfirm);
         return this;
     }
 
-    public PageWithRegistration firstNameInput(String value) {
-        firstName.setValue(value);
+    public PageWithRegistration firstNameInput(String FirstName) {
+        firstName.setValue(FirstName);
         return this;
     }
 
-    public PageWithRegistration lastNameInput(String value) {
-        lastName.setValue(value);
+    public PageWithRegistration lastNameInput(String LastName) {
+        lastName.setValue(LastName);
         return this;
     }
 
-    public PageWithRegistration numberInput(String value) {
-        number.setValue(value);
+    public PageWithRegistration numberInput(String Number) {
+        number.setValue(Number);
         return this;
     }
 
@@ -109,8 +110,8 @@ public class PageWithRegistration {
         return this;
     }
 
-    public PageWithRegistration captchaInput(String value) {
-        captcha.setValue(value);
+    public PageWithRegistration captchaInput(String Captcha) {
+        captcha.setValue(Captcha);
         return this;
     }
 
@@ -159,63 +160,63 @@ public class PageWithRegistration {
         return this;
     }
 
-    public PageWithRegistration checkErrorEmail(String value) {
-        errorEmailInput.shouldHave(text(value));
+    public PageWithRegistration checkErrorEmail(String ErrorText) {
+        errorEmailInput.shouldHave(text(ErrorText));
         errorEmailInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorLogin(String value) {
-        errorLoginInput.shouldHave(text(value));
+    public PageWithRegistration checkErrorLogin(String ErrorText) {
+        errorLoginInput.shouldHave(text(ErrorText));
         errorLoginInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorPassword(String value) {
-        errorPasswordInput.shouldHave(text(value));
+    public PageWithRegistration checkErrorPassword(String ErrorText) {
+        errorPasswordInput.shouldHave(text(ErrorText));
         errorPasswordInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorPasswordConfirm(String value) {
-        errorPasswordConfirmInput.shouldHave(text(value));
+    public PageWithRegistration checkErrorPasswordConfirm(String ErrorText) {
+        errorPasswordConfirmInput.shouldHave(text(ErrorText));
         errorPasswordConfirmInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorFirstName(String value) {
-        errorFirstNameInput.shouldHave(text(value));
+    public PageWithRegistration checkErrorFirstName(String ErrorText) {
+        errorFirstNameInput.shouldHave(text(ErrorText));
         errorFirstNameInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorLastName(String value) {
-        errorLastNameInput.shouldHave(text(value));
+    public PageWithRegistration checkErrorLastName(String ErrorText) {
+        errorLastNameInput.shouldHave(text(ErrorText));
         errorLastNameInput.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorEmptyAgreement(String value) {
-        errorEmptyAgreement.shouldHave(text(value));
+    public PageWithRegistration checkErrorEmptyAgreement(String ErrorText) {
+        errorEmptyAgreement.shouldHave(text(ErrorText));
         errorEmptyAgreement.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorEmptyCaptcha(String value) {
-        errorCaptcha.shouldHave(text(value));
+    public PageWithRegistration checkErrorEmptyCaptcha(String ErrorText) {
+        errorCaptcha.shouldHave(text(ErrorText));
         errorCaptcha.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorInvalidNumber(String value) {
-        errorInvalidNumber.shouldHave(text(value));
+    public PageWithRegistration checkErrorInvalidNumber(String ErrorText) {
+        errorInvalidNumber.shouldHave(text(ErrorText));
         errorInvalidNumber.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithRegistration checkErrorEntryMessage (String value) {
-        errorRegisterMessage.find(byText(value));
-        errorRegisterMessage.shouldHave(text(value));
+    public PageWithRegistration checkErrorEntryMessage (String ErrorText) {
+        errorRegisterMessage.find(byText(ErrorText));
+        errorRegisterMessage.shouldHave(text(ErrorText));
         errorRegisterMessage.parent().shouldBe(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }

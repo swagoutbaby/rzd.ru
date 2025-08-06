@@ -1,11 +1,9 @@
 package tests;
 
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.PageWithHome;
-import utils.FakerUtil;
 
 @Tag("regression")
 
@@ -168,68 +166,104 @@ public class HomeTests extends TestBase {
                 .openPage()
                 .closeCookie()
 
-                .buyTicketClick()
+                .clickBuyTicket()
                 .checkHomePage()
 
-                .trainsAndRoutesClick()
+                .clickTrainsAndRoutes()
                 .checkTrainsAndRoutes()
-                .trainAndRoutesDropListClick()
+                .clickTrainAndRoutesDropList()
                 .checkTrainAndRoutesDropList("Двухэтажные поезда")
 
-                .trainStationsClick()
+                .clickTrainStations()
                 .checkTrainStations()
 
-                .tariffsAndActionClick()
+                .clickTariffsAndAction()
                 .checkTariffsAndActionPage()
-                .tariffsAndActionDropListClick()
+                .clickTariffsAndActionDropList()
                 .checkTariffsAndActionDropList("Льготы")
 
-                .uslugsAndServicesClick()
+                .clickUslugsAndServices()
                 .checkUslugsAndServicesPage()
-                .uslugsAndServicesDropListClick()
+                .clickUslugsAndServicesDropList()
                 .checkUslugsAndServicesDropList("Маломобильным пассажирам")
 
-                .rzdBonusClick()
+                .clickRzdBonus()
                 .checkRzdBonusPage()
                 .openPage()
-                .rzdBonusDropListClick()
+                .clickRzdBonusDropList()
                 .checkRzdBonusDropList("Клуб путешественников")
 
-                .rulesClick()
+                .clickRules()
                 .checkRulesPage()
-                .rulesDropListClick()
+                .clickRulesDropList()
                 .checkRulesDropList("Правила")
 
-                .infoClick()
+                .clickInfo()
                 .checkInfoPage()
-                .infoDropListClick()
+                .clickInfoDropList()
                 .checkInfoDropList("Информация")
 
-                .siteMapClick()
+                .clickSiteMap()
                 .checkSiteMap();
     }
 
     @Test
-    @DisplayName("Проверка работы поиска маршрута")
+    @DisplayName("Проверка работы выбора пассажиров")
     @Tag("smoke")
-    void routeSearchTest() {
+    void passengerOptionsTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Москва")
-                .cityWhereInput("Казань")
-                .chooseDepartureDate("8/15/2025")
-                .chooseReturnDate("8/30/2025")
-//                .plusCountAdult(1) // Один взрослый по умолчанию, +1 Итого: 2 взрослых
-//                .minusCountAdult(1)
-//                .plusCountBabyWithPlace(2)
-//                .plusCountBabyWithPlace(2)
-//                .minusCountBabyWithPlace(1)
-//                .plusCountBabyWithoutPlace(2)
-//                .minusCountBabyWithoutPlace(1)
-                .clickFindRoute()
-                .checkRoutePage("Москва", "Казань", " 15 авг., пт ");
+                .clickCountOfPassengers()
+
+                .clickForDisabledPersonCheckbox()
+                .checkIconForDisabledPerson()
+                .clickForDisabledPersonCheckbox()
+
+                .clickForLargeFamiliesCheckbox()
+                .checkIconForLargeFamilies()
+                .clickForLargeFamiliesCheckbox()
+
+                .clickAnimalCheckbox()
+                .checkIconAnimals()
+                .clickAnimalCheckbox()
+
+                .clickCarCheckbox()
+                .checkIconCar()
+                .clickCarCheckbox()
+
+                .clickMotorcycleCheckbox()
+                .checkIconMotorcycle()
+                .clickMotorcycleCheckbox()
+
+
+                .clickForDisabledPersonCheckbox()
+                .clickForLargeFamiliesCheckbox()
+                .clickAnimalCheckbox()
+
+                .checkIconForDisabledPerson()
+                .checkIconForLargeFamilies()
+                .checkIconAnimals()
+
+                .clickForLargeFamiliesCheckbox()
+                .clickForDisabledPersonCheckbox()
+                .clickAnimalCheckbox()
+
+
+                .plusCountBabyWithoutPlace(2)
+                .checkErrorNotice("Извините, количество детей без места в заказе не может быть больше количества пассажиров с местом.")
+                .minusCountBabyWithoutPlace(2)
+
+                .plusCountAdult(9)
+                .checkErrorNotice("Извините, в одном заказе может быть не более 9 пассажиров с местом.")
+                .minusCountAdult(8)
+
+                .clickForDisabledPersonCheckbox()
+                .plusCountAdult(4)
+                .checkErrorNotice("Извините, в одном заказе с маломобильным пассажиром может быть не более трёх сопровождающих пассажиров с местами.")
+                .minusCountAdult(4);
+
     }
 
     @Test
@@ -241,18 +275,11 @@ public class HomeTests extends TestBase {
                 .closeCookie()
 
                 .cityFromInput("Москва")
-                .cityWhereInput("Казань")
+                .cityToInput("Казань")
                 .chooseDepartureDate("8/15/2025")
                 .chooseReturnDate("8/30/2025")
-//                .plusCountAdult(1) // Один взрослый по умолчанию, +1 Итого: 2 взрослых
-//                .minusCountAdult(1)
-//                .plusCountBabyWithPlace(2)
-//                .plusCountBabyWithPlace(2)
-//                .minusCountBabyWithPlace(1)
-//                .plusCountBabyWithoutPlace(2)
-//                .minusCountBabyWithoutPlace(1)
                 .clickFindRoute()
-                .checkRoutePage("Москва", "Казань", " 15 авг., пт ");
+                .checkRoutePage("Москва", "Казань");
     }
 
     @Test
@@ -264,18 +291,29 @@ public class HomeTests extends TestBase {
                 .closeCookie()
 
                 .cityFromInput("Москва")
-                .cityWhereInput("Москва")
+                .cityToInput("Москва")
                 .chooseDepartureDate("8/15/2025")
                 .chooseReturnDate("8/30/2025")
-//                .plusCountAdult(1) // Один взрослый по умолчанию, +1 Итого: 2 взрослых
-//                .minusCountAdult(1)
-//                .plusCountBabyWithPlace(2)
-//                .plusCountBabyWithPlace(2)
-//                .minusCountBabyWithPlace(1)
-//                .plusCountBabyWithoutPlace(2)
-//                .minusCountBabyWithoutPlace(1)
                 .clickFindRoute()
                 .checkInvalidRoutePage("Прямых железнодорожных рейсов по маршруту Москва", "— Москва на", "15 августа не найдено.");
+    }
+
+    @Test
+    @DisplayName("Проверка работы смены направления")
+    @Tag("smoke")
+    void swapCityTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
+
+                .cityFromInput("Москва")
+                .cityToInput("Адлер")
+                .chooseDepartureDate("8/15/2025")
+                .clickNotNeedReturnTicket()
+                .clickSwapCity()
+                .clickFindRoute()
+                .checkRoutePageCityFrom("Адлер")
+                .checkRoutePageCityTo("Москва");
     }
 
     @Test
@@ -286,7 +324,25 @@ public class HomeTests extends TestBase {
                 .openPage()
                 .closeCookie()
 
-                .checkFindHotel("https://travel.rzd.ru/?utm_source=rzd_checkbox_all&utm_medium=referral&utm_campaign=hotels");
+                .clickFindHotel()
+                .checkCheckboxFindHotel()
+                .clickTravelRZD()
+                .checkTravelRZDPage("https://travel.rzd.ru/?utm_source=rzd_checkbox_all&utm_medium=referral&utm_campaign=hotels");
+    }
+
+    @Test
+    @DisplayName("Проверка работы поиска")
+    @Tag("smoke")
+    void searchTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
+
+                .clickSearch()
+                .searchInput("Москва")
+                .clickSearchButton()
+                .checkKeywords("Москва")
+                .checkSearchResults("Москва");
     }
 
     @Test
@@ -297,13 +353,13 @@ public class HomeTests extends TestBase {
                 .openPage()
                 .closeCookie()
 
-                .onlineChatClick()
+                .clickOnlineChat()
                 .checkOnlineChat("Здравствуйте! Напишите Ваш вопрос или выберите тему:")
                 .chooseThemeOnlineChat("Возврат электронных билетов")
                 .checkOnlineChat("Ответы на самые популярные вопросы," +
                         " связанные с возвратом электронных билетов доступны на этой странице.")
 
-                .onlineChatClick()
+                .clickOnlineChat()
                 .checkOnlineChat("Здравствуйте! Напишите Ваш вопрос или выберите тему:")
                 .sendMessageOnlineChat("Возврат электронных билетов")
                 .checkOnlineChat("Автоматическое сообщение")
@@ -315,5 +371,115 @@ public class HomeTests extends TestBase {
                         "Или у Вас билет на электричку?");
     }
 
+    @Test
+    @DisplayName("Проверка тестового сценария c перевозкой автомобиля")
+    @Tag("smoke")
+    void carTransportationTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
 
+                .cityFromInput("Москва")
+                .cityToInput("Адлер")
+                .chooseDepartureDate("8/20/2025")
+                .clickNotNeedReturnTicket()
+                .minusCountAdult(1)
+                .clickCarCheckbox()
+                .clickFindRoute()
+                .clickEntryTicketPage()
+                .loginInputTicketPage("swagoutbaby")
+                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .clickEntryButtonTicketPage()
+                .chooseTypeSeat("Перевозка автомобиля (мототехники)")
+                .chooseTypeSeat("Перевозка автомобиля (мототехники)") // Надо кликнуть два раза
+                .checkCarTransportationPage()
+                .clickEntryTicketPage()
+                .clickLogoutTicketPage();
+    }
+
+    @Test
+    @DisplayName("Проверка тестового сценария c перевозкой животного без сопровождающего")
+    @Tag("smoke")
+    void animalsTransportationTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
+
+                .cityFromInput("Москва")
+                .cityToInput("Адлер")
+                .chooseDepartureDate("8/20/2025")
+                .clickNotNeedReturnTicket()
+                .minusCountAdult(1)
+                .clickAnimalCheckbox()
+                .clickFindRoute()
+                .clickEntryTicketPage()
+                .loginInputTicketPage("swagoutbaby")
+                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .clickEntryButtonTicketPage()
+                .chooseTypeSeat("Перевозка животных без сопровождающего")
+                .chooseTypeSeat("Перевозка животных без сопровождающего") // Надо кликнуть два раза
+                .checkAnimalsTransportationPage()
+                .clickEntryTicketPage()
+                .clickLogoutTicketPage();
+    }
+
+    @Test
+    @DisplayName("Проверка тестового сценария c 1 пассажиром")
+    @Tag("E2E")
+    void onePerson_e2eTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
+
+                .cityFromInput("Тюмень")
+                .cityToInput("Екатерибург")
+                .chooseDepartureDate("8/15/2025")
+                .clickNotNeedReturnTicket()
+                .clickSwapCity()
+                .clickFindRoute()
+                .clickEntryTicketPage()
+                .loginInputTicketPage("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
+                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .clickEntryButtonTicketPage()
+                .chooseTypeSeat("Плацкартный")
+                .chooseAvailableSeat()
+                .clickContinue()
+                .clickChoosePassengerButton()
+                .choosePassenger("Степаненко Влад Дмитриевич") // Нужно ввести валидное ФИО для корректного проведения тестирования
+                .clickEntryTicketPage()
+                .clickLogoutTicketPage();
+//                .clickMakeOrderButton() // Закомментил чтобы не заказывать билеты постоянно, для полноценной проверки раскосматить
+//                .checkOrderPage();
+    }
+
+    @Test
+    @DisplayName("Проверка тестового сценария c 1 пассажиром инвалидом")
+    @Tag("E2E")
+    void oneDisabledPerson_e2eTest() {
+        pageWithHome
+                .openPage()
+                .closeCookie()
+
+                .cityFromInput("Москва")
+                .cityToInput("Адлер")
+                .chooseDepartureDate("8/20/2025")
+                .clickNotNeedReturnTicket()
+                .clickForDisabledPersonCheckbox()
+                .clickFindRoute()
+                .clickEntryTicketPage()
+                .loginInputTicketPage("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
+                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .clickEntryButtonTicketPage()
+                .chooseTypeSeat("Купе (для инвалидов)")
+                .chooseAvailableSeat()
+                .clickContinue()
+                .clickChoosePassengerButton()
+                .choosePassenger("Степаненко Влад Дмитриевич") // Нужно ввести валидное ФИО для корректного проведения тестирования
+                .checkSnils()
+                .clickEntryTicketPage()
+                .clickLogoutTicketPage();
+//                .inputSnils("") // Нужно ввести корректные значения в таком формате: "xxx-xxx-xxx xx" x - цифра
+//                .clickMakeOrderButton();
+//                .checkOrderPage(); // Если есть корректные значения, то можно раскомментить
+    }
 }

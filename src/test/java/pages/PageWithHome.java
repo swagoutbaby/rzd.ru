@@ -2,18 +2,12 @@ package pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverThreadLocalContainer;
-import com.codeborne.selenide.selector.ByDeepShadowCss;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selectors.shadowDeepCss;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverConditions.currentFrameUrl;
 import static com.codeborne.selenide.WebDriverConditions.url;
-import static org.junit.jupiter.api.Assertions.fail;
 
 
 
@@ -23,102 +17,138 @@ public class PageWithHome {
             CookieButton = $(".cookie-alert__btn"),
 
             // Первый хедер
-            passengers = $(".header_site").$(byTagAndText("a", "Пассажирам")),
-            freightTransportation = $(".header_site").$(byTagAndText("a", "Грузовые перевозки")),
-            company = $(".header_site").$(byTagAndText("a", "Компания")),
-            workInRZD = $(".header_site").$(byTagAndText("a", "Работа в РЖД")),
-            contacts = $(".header_site").$(byTagAndText("a", "Контакты")),
-            visuallyImpaired = $(".blind__text"),
-            regularSite = $(".settings-wrap").$(byTagAndText("span", "Обычная версия сайта")),
-            pressEntry = $(".j-auth-open.username"),
-            cancelEntry = $(byTagAndText("a", "Отмена")),
-            switchLanguageButton = $(".j-locale-select-open"),
+            passengers = $(".header_site").$(byText("Пассажирам")),
+            freightTransportation = $(".header_site").$(byText("Грузовые перевозки")),
+            company = $(".header_site").$(byText("Компания")),
+            workInRZD = $(".header_site").$(byText("Работа в РЖД")),
+            contacts = $(".header_site").$(byText("Контакты")),
+            visuallyImpaired = $(".blind__text"), // Версия для слабовидящих
+            regularSite = $(".settings-wrap").$(byText("Обычная версия сайта")),
+            entry = $(".j-auth-open.username"),
+            login = $("[placeholder=Логин]"),
+            password = $("[placeholder=Пароль]"),
+            entryButton = $(byTagAndText("button", "Войти")),
+            cancelEntry = $(".j-auth-close"),
+            languageButton = $(".j-locale-select-open"),
             switchLanguage = $(".locale-switch__li"),
             search = $(".icon-search"),
-
-            pageFreightTransportation = $(".body-page-92162"),
-            pageCompany = $(".body-page-31560"),
-            pageWorkInRZD = $(".bg-white"),
-            pageContacts = $(".body-page-100162"),
-            pageVisuallyImpaired = $(byTagAndText("span", "Обычная версия сайта")),
-            header = $(".j-tab.form-tab_link.active"),
-            openSearch = $(".menu-search-btn"),
+            searchInput = $("[name=search_pattern]"),
+            searchButton = $(".menu-search-btn"),
             closeSearch = $(".menu-search-close"),
+            keywords = $("[data-test-id=keywords]"),
+            searchResults = $(".j-search_container"),
 
-    // Второй хедер
-            buyTicket = $("[data-test-id=block_4]").$(byTagAndText("a", "Купить билет")),
+            // Локаторы открываемых страниц для их проверки
+            freightTransportationPage = $(".body-page-92162"),
+            companyPage = $(".body-page-31560"),
+            workInRZDPage = $(".bg-white"),
+            contactsPage = $(".body-page-100162"),
+            visuallyImpairedPage = $(byText("Обычная версия сайта")),
+            headerEntryForm = $(".j-tab.form-tab_link.active"),
 
-            trainsAndRoutes = $("[data-test-id=block_4]").$(byTagAndText("a", "Поезда и маршруты")),
-            trainsAndRoutesDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Поезда и маршруты"))
+
+            // Второй хедер
+            buyTicket = $("[data-test-id=block_4]").$(byText("Купить билет")),
+
+            trainsAndRoutes = $("[data-test-id=block_4]").$(byText("Поезда и маршруты")),
+            trainsAndRoutesDropListButton = $("[data-test-id=block_4]").$(byText("Поезда и маршруты"))
                     .sibling(0).$(".j-menu-open"),
-            trainsAndRoutesDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Поезда и маршруты"))
+            trainsAndRoutesDropList = $("[data-test-id=block_4]").$(byText("Поезда и маршруты"))
                     .sibling(0).$(".menu-list.j-menu"),
             trainsAndRoutesPage = $(".nav-header__title"),
 
-            trainStations = $("[data-test-id=block_4]").$(byTagAndText("a", "Вокзалы")),
+            trainStations = $("[data-test-id=block_4]").$(byText("Вокзалы")),
             trainStationsPage = $(".highlight"),
 
-            tariffsAndAction = $("[data-test-id=block_4]").$(byTagAndText("a", "Тарифы и акции")),
-            tariffsAndActionDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Тарифы и акции"))
+            tariffsAndAction = $("[data-test-id=block_4]").$(byText("Тарифы и акции")),
+            tariffsAndActionDropListButton = $("[data-test-id=block_4]").$(byText("Тарифы и акции"))
                     .sibling(0).$(".j-menu-open"),
-            tariffsAndActionDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Тарифы и акции"))
+            tariffsAndActionDropList = $("[data-test-id=block_4]").$(byText("Тарифы и акции"))
                     .sibling(0).$(".menu-list.j-menu"),
-            TariffsAndActionPage = $(".nav-header__title"),
+            tariffsAndActionPage = $(".nav-header__title"),
 
-            uslugsAndServices = $("[data-test-id=block_4]").$(byTagAndText("a", "Услуги и сервисы")),
-            uslugsAndServicesDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Услуги и сервисы"))
+            uslugsAndServices = $("[data-test-id=block_4]").$(byText("Услуги и сервисы")),
+            uslugsAndServicesDropListButton = $("[data-test-id=block_4]").$(byText("Услуги и сервисы"))
                     .sibling(0).$(".j-menu-open"),
-            uslugsAndServicesDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Услуги и сервисы"))
+            uslugsAndServicesDropList = $("[data-test-id=block_4]").$(byText("Услуги и сервисы"))
                     .sibling(0).$(".menu-list.j-menu"),
             uslugsAndServicesPage = $(".nav-header__title"),
 
-            rzdBonus = $("[data-test-id=block_4]").$(byTagAndText("a", "РЖД Бонус")),
-            rzdBonusDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "РЖД Бонус"))
+            rzdBonus = $("[data-test-id=block_4]").$(byText("РЖД Бонус")),
+            rzdBonusDropListButton = $("[data-test-id=block_4]").$(byText("РЖД Бонус"))
                     .sibling(0).$(".j-menu-open"),
-            rzdBonusDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "РЖД Бонус"))
+            rzdBonusDropList = $("[data-test-id=block_4]").$(byText("РЖД Бонус"))
                     .sibling(0).$(".menu-list.j-menu"),
             rzdBonusPage = $(".fp-viewing-main"),
 
-            rules = $("[data-test-id=block_4]").$(byTagAndText("a", "Правила")),
-            rulesDroplistButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Правила"))
+            rules = $("[data-test-id=block_4]").$(byText("Правила")),
+            rulesDroplistButton = $("[data-test-id=block_4]").$(byText("Правила"))
                     .sibling(0).$(".j-menu-open"),
-            rulesDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Правила"))
+            rulesDropList = $("[data-test-id=block_4]").$(byText("Правила"))
                     .sibling(0).$(".menu-list.j-menu"),
             rulesPage = $(".nav-header__title"),
 
-            info = $("[data-test-id=block_4]").$(byTagAndText("a", "Информация")),
-            infoDropListButton = $("[data-test-id=block_4]").$(byTagAndText("a", "Информация"))
+            info = $("[data-test-id=block_4]").$(byText("Информация")),
+            infoDropListButton = $("[data-test-id=block_4]").$(byText("Информация"))
                     .sibling(0).$(".j-menu-open"),
-            infoDropList = $("[data-test-id=block_4]").$(byTagAndText("a", "Информация"))
+            infoDropList = $("[data-test-id=block_4]").$(byText("Информация"))
                     .sibling(0).$(".menu-list.j-menu"),
             infoPage = $(".nav-header__title"),
 
-            siteMap = $("[data-test-id=block_4]").$(byTagAndText("a", "Карта сайта")),
+            siteMap = $("[data-test-id=block_4]").$(byText( "Карта сайта")),
             siteMapPage = $(".nav-header__title"),
 
             // Форма поиска маршрутов
             cityFrom = $(shadowDeepCss("[formcontrolname=fromNode]")).$(byTagName("input")),
-            swapCityButton = $(".route-search__swapper"),
-            cityWhere = $(shadowDeepCss("[formcontrolname=toNode]")).$(byTagName("input")),
+            swapCityButton = $(shadowDeepCss("[icon=change-2]")),
+            cityTo = $(shadowDeepCss("[formcontrolname=toNode]")).$(byTagName("input")),
             departureDate = $(shadowDeepCss("[controlname=fromDate]")).$(byTagName("input")),
             returnDate = $(shadowDeepCss("[controlname=backDate]")).$(byTagName("input")),
-            numberOfPassengers = $(shadowDeepCss(".search-panel-options.__dropdown-opened")),
-            dropdownPassengersList = $(".search-panel-options__dropdown"),
+            notNeedReturnTicket = $(shadowDeepCss("[data-testid=route-search-without-back-date-button]")),
 
-            minusAdultPassenger = $(shadowDeepCss("[formcontrolname=adult]")).$(shadowDeepCss(".counter__button")),
-            plusAdultPassenger = $(shadowDeepCss("[formcontrolname=adult]")).$(shadowDeepCss(".counter__button")).sibling(1),
+            countOfPassengers = $(shadowDeepCss(".route-search__options")),
 
-//            plusBabyWithPlace = $(shadowDeepCss("[formcontrolname=babyWithPlace]")).$(shadowDeepCss(".counter__button")).sibling(1),
-//            minusBabyWithPlace = $(shadowDeepCss("[formcontrolname=babyWithPlace]")).$(shadowDeepCss(".counter__button")),
-//
-//            plusBabyWithoutPlace =
-//            minusBabyWithoutPlace =
+            minusAdult = $(shadowDeepCss("[formcontrolname='adult']")).$(".counter__button"),
+            plusAdult = $(shadowDeepCss("[formcontrolname='adult']")).$(".counter__button").sibling(1),
 
-            forInvalid = $("[formcontrolname=disabledPerson]"),
+            minusBabyWithPlace = $(shadowDeepCss("[formcontrolname='babyWithPlace']")).$(".counter__button"),
+            plusBabyWithPlace = $(shadowDeepCss("[formcontrolname='babyWithPlace']")).$(".counter__button").sibling(1),
+
+            minusBabyWithoutPlace = $(shadowDeepCss("[formcontrolname='babyWithoutPlace']")).$(".counter__button"),
+            plusBabyWithoutPlace = $(shadowDeepCss("[formcontrolname='babyWithoutPlace']")).$(".counter__button").sibling(1),
+
+            forDisabledPersonCheckbox = $(shadowDeepCss("[formcontrolname='disabledPerson']")),
+            forLargeFamiliesCheckbox = $(shadowDeepCss("[formcontrolname='largeFamily']")),
+            animalCheckbox = $(shadowDeepCss("[formcontrolname='animal']")),
+            carCheckbox = $(shadowDeepCss("[formcontrolname='carTransportation']")),
+            motorcycleCheckbox = $(shadowDeepCss("[formcontrolname='motorcycleTransportation']")),
+            errorNotice = $(shadowDeepCss(".search-panel-container__section-notice")),
+            iconDisabledPerson = $(shadowDeepCss(".route-search__options")).$("[icon=disabled-person]"),
+            iconLargeFamilies = $(shadowDeepCss(".route-search__options")).$("[icon=large-family]"),
+            iconAnimals = $(shadowDeepCss(".route-search__options")).$("[icon=animals-icon]"),
+            iconCar = $(shadowDeepCss(".route-search__options")).$("[icon=car]"),
+            iconMotorcycle = $(shadowDeepCss(".route-search__options")).$("[icon=motorcycle-transportation]"),
 
             findRoute = $(shadowDeepCss(".route-search__submit-button")),
             routePage = $(".searchresults__list"),
+            routePageCityFrom = $(".card-route__station--from"),
+            routePageCityTo = $(".card-route__station--to"),
             invalidRoutePage = $(".searchresults__cards-wrapper"),
+            carTransportationPage = $(".step-info-title"),
+            animalsTransportationPage = $(".step-info-title"),
+            availableSeat = $(".seat--available"),
+            continueButton = $(".seats-summary__terminal_btn"),
+            entryTicketPage = $(".header__login-button"),
+            loginInputTicketPage = $("[aria-label=Логин]"),
+            passwordInputTicketPage = $("[aria-label=Пароль]"),
+            entryButtonTicketPage = $(".login-form__button").$("[type=submit]"),
+            logoutTicketPage = $("[data-testid=side-menu-logout]"),
+            closeSideMenuButton = $(".side-menu-wrapper__close-btn"),
+            choosePassengerButton = $(".select-cnt"),
+            snils = $(".ui-kit-input-placeholder"),
+            snilsInput = $(".ui-kit-input-text"),
+            makeOrderButton = $("[data-testid=boarding-book-order-button]"),
+            payButton = $("[data-testid=order-payment-button]"),
 
 
             // Поиск отеля на Travel.RZD
@@ -135,8 +165,9 @@ public class PageWithHome {
             mobileBlock = $(".ekmp.section_item.text-white"),
             lowerBlock = $(".site-map.section_item"),
             lowestBlockLicenses = $(".media.section_item.media-line"),
-    
-            onlineChat = $(".chat__icon"), // Онлайн чат с виртуальным помощником
+
+            // Онлайн чат с виртуальным помощником
+            onlineChat = $(".chat__icon"),
             mainChat = $(".main_chat"),
             inputMessage = $(".chat.chat__open").$("[name=text]"),
             sendMessageButton = $("[title=Отправить]");
@@ -153,7 +184,7 @@ public class PageWithHome {
         if (CookieButton.isDisplayed())
         {
             CookieButton.click();
-            Selenide.sleep(2000);
+            Selenide.sleep(1000);
         }
         return this;
     }
@@ -200,7 +231,23 @@ public class PageWithHome {
     }
 
     public PageWithHome clickEntry() {
-        pressEntry.click();
+        entry.click();
+        return this;
+    }
+
+    public PageWithHome loginInput (String Login) {
+        login.setValue(Login);
+        return this;
+    }
+
+    public PageWithHome passwordInput (String Password) {
+        password.setValue(Password);
+        return this;
+    }
+
+    public PageWithHome clickEntryButton () {
+        entryButton.click();
+        Selenide.sleep(3000);
         return this;
     }
 
@@ -214,18 +261,38 @@ public class PageWithHome {
         return this;
     }
 
+    public PageWithHome searchInput(String words) {
+        searchInput.setValue(words);
+        return this;
+    }
+
+    public PageWithHome clickSearchButton() {
+        searchButton.click();
+        return this;
+    }
+
+    public PageWithHome checkKeywords(String words) {
+        keywords.getAttribute("value").equals(words);
+        return this;
+    }
+
+    public PageWithHome checkSearchResults(String words) {
+        searchResults.shouldHave(text(words));
+        return this;
+    }
+
     public PageWithHome switchLanguage() {
-        switchLanguageButton.click();
+        languageButton.click();
         switchLanguage.click();
         return this;
     }
 
-    public PageWithHome buyTicketClick() {
+    public PageWithHome clickBuyTicket() {
         buyTicket.click();
         return this;
     }
 
-    public PageWithHome trainsAndRoutesClick() {
+    public PageWithHome clickTrainsAndRoutes() {
         trainsAndRoutes.click();
         return this;
     }
@@ -235,17 +302,17 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome trainAndRoutesDropListClick() {
+    public PageWithHome clickTrainAndRoutesDropList() {
         trainsAndRoutesDropListButton.click();
         return this;
     }
 
-    public PageWithHome checkTrainAndRoutesDropList(String value) {
-        trainsAndRoutesDropList.shouldHave(text(value));
+    public PageWithHome checkTrainAndRoutesDropList(String listItem) {
+        trainsAndRoutesDropList.shouldHave(text(listItem));
         return this;
     }
 
-    public PageWithHome trainStationsClick() {
+    public PageWithHome clickTrainStations() {
         trainStations.click();
         return this;
     }
@@ -255,39 +322,39 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome tariffsAndActionClick() {
+    public PageWithHome clickTariffsAndAction() {
         tariffsAndAction.click();
         return this;
     }
 
-    public PageWithHome tariffsAndActionDropListClick() {
+    public PageWithHome clickTariffsAndActionDropList() {
         tariffsAndActionDropListButton.click();
         return this;
     }
 
-    public PageWithHome checkTariffsAndActionDropList(String value) {
-        tariffsAndActionDropList.shouldHave(text(value));
+    public PageWithHome checkTariffsAndActionDropList(String listItem) {
+        tariffsAndActionDropList.shouldHave(text(listItem));
         return this;
     }
 
     public PageWithHome checkTariffsAndActionPage() {
-        TariffsAndActionPage.shouldHave(text("Тарифы и акции"));
+        tariffsAndActionPage.shouldHave(text("Тарифы и акции"));
         return this;
     }
 
 
-    public PageWithHome uslugsAndServicesClick() {
+    public PageWithHome clickUslugsAndServices() {
         uslugsAndServices.click();
         return this;
     }
 
-    public PageWithHome uslugsAndServicesDropListClick() {
+    public PageWithHome clickUslugsAndServicesDropList() {
         uslugsAndServicesDropListButton.click();
         return this;
     }
 
-    public PageWithHome checkUslugsAndServicesDropList(String value) {
-        uslugsAndServicesDropList.shouldHave(text(value));
+    public PageWithHome checkUslugsAndServicesDropList(String listItem) {
+        uslugsAndServicesDropList.shouldHave(text(listItem));
         return this;
     }
 
@@ -296,18 +363,18 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome rzdBonusClick() {
+    public PageWithHome clickRzdBonus() {
         rzdBonus.click();
         return this;
     }
 
-    public PageWithHome rzdBonusDropListClick() {
+    public PageWithHome clickRzdBonusDropList() {
         rzdBonusDropListButton.click();
         return this;
     }
 
-    public PageWithHome checkRzdBonusDropList(String value) {
-        rzdBonusDropList.shouldHave(text(value));
+    public PageWithHome checkRzdBonusDropList(String listItem) {
+        rzdBonusDropList.shouldHave(text(listItem));
         return this;
     }
 
@@ -316,18 +383,18 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome rulesClick() {
+    public PageWithHome clickRules() {
         rules.click();
         return this;
     }
 
-    public PageWithHome rulesDropListClick() {
+    public PageWithHome clickRulesDropList() {
         rulesDroplistButton.click();
         return this;
     }
 
-    public PageWithHome checkRulesDropList(String value) {
-        rulesDropList.shouldHave(text(value));
+    public PageWithHome checkRulesDropList(String listItem) {
+        rulesDropList.shouldHave(text(listItem));
         return this;
     }
 
@@ -336,18 +403,18 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome infoClick() {
+    public PageWithHome clickInfo() {
         info.click();
         return this;
     }
 
-    public PageWithHome infoDropListClick() {
+    public PageWithHome clickInfoDropList() {
         infoDropListButton.click();
         return this;
     }
 
-    public PageWithHome checkInfoDropList(String value) {
-        infoDropList.shouldHave(text(value));
+    public PageWithHome checkInfoDropList(String listItem) {
+        infoDropList.shouldHave(text(listItem));
         return this;
     }
 
@@ -356,7 +423,7 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome siteMapClick() {
+    public PageWithHome clickSiteMap() {
         siteMap.click();
         return this;
     }
@@ -366,19 +433,20 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome cityFromInput(String value) {
-        cityFrom.setValue(value);
+    public PageWithHome cityFromInput(String CityFrom) {
+        cityFrom.setValue(CityFrom);
         Selenide.sleep(500);
         return this;
     }
 
-    public PageWithHome swapCityClick() {
+    public PageWithHome clickSwapCity() {
         swapCityButton.click();
+        Selenide.sleep(1000);
         return this;
     }
 
-    public PageWithHome cityWhereInput(String value) {
-        cityWhere.setValue(value);
+    public PageWithHome cityToInput(String CityTo) {
+        cityTo.setValue(CityTo);
         Selenide.sleep(500);
         return this;
     }
@@ -400,93 +468,274 @@ public class PageWithHome {
         String year = date.substring(5, 9);
         $(shadowDeepCss(".ui-kit-datepicker")).$(shadowDeepCss("[data-testid='ui-kit-day_"
                 + day + "\\/" + month + "\\/" + year + "']")).click();
+        Selenide.sleep(1000);
         return this;
     }
 
-    public PageWithHome clickNumberOfPassengers() {
-        numberOfPassengers.click();
+    public PageWithHome clickNotNeedReturnTicket() {
+        notNeedReturnTicket.click();
+        return this;
+    }
+
+    public PageWithHome clickCountOfPassengers() {
+        countOfPassengers.click();
+        return this;
+    }
+
+    public PageWithHome minusCountAdult(int value) {
+        for (int i = 0; i < value; i++) {
+            minusAdult.click();
+        }
+        Selenide.sleep(300);
+        return this;
+    }
+
+    public PageWithHome plusCountAdult(int value) {
+        for (int i = 0; i < value; i++) {
+            plusAdult.click();
+        }
+        Selenide.sleep(300);
+        return this;
+    }
+
+    public PageWithHome minusCountBabyWithPlace(int value) {
+        for (int i = 0; i < value; i++) {
+            minusBabyWithPlace.click();
+        }
+        Selenide.sleep(300);
+        return this;
+    }
+
+    public PageWithHome plusCountBabyWithPlace(int value) {
+        for (int i = 0; i < value; i++) {
+            plusBabyWithPlace.click();
+        }
+        Selenide.sleep(300);
+        return this;
+    }
+
+    public PageWithHome minusCountBabyWithoutPlace(int value) {
+        for (int i = 0; i < value; i++) {
+            minusBabyWithoutPlace.click();
+        }
+        Selenide.sleep(300);
+        return this;
+    }
+
+    public PageWithHome plusCountBabyWithoutPlace(int value) {
+        for (int i = 0; i < value; i++) {
+            plusBabyWithoutPlace.click();
+        }
+        Selenide.sleep(300);
+        return this;
+    }
+
+    public PageWithHome clickForDisabledPersonCheckbox() {
+        forDisabledPersonCheckbox.click();
+        return this;
+    }
+
+    public PageWithHome checkIconForDisabledPerson() {
+        iconDisabledPerson.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome clickForLargeFamiliesCheckbox() {
+        forLargeFamiliesCheckbox.click();
+        return this;
+    }
+
+    public PageWithHome checkIconForLargeFamilies() {
+        iconLargeFamilies.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome clickAnimalCheckbox() {
+        animalCheckbox.click();
+        return this;
+    }
+
+    public PageWithHome checkIconAnimals() {
+        iconAnimals.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome clickCarCheckbox() {
+        carCheckbox.click();
+        return this;
+    }
+
+    public PageWithHome checkIconCar() {
+        iconCar.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome clickMotorcycleCheckbox() {
+        motorcycleCheckbox.click();
+        return this;
+    }
+
+    public PageWithHome checkIconMotorcycle() {
+        iconMotorcycle.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome checkErrorNotice(String error) {
+        errorNotice.shouldHave(text(error));
         return this;
     }
 
     public PageWithHome clickFindRoute() {
         findRoute.click();
-        Selenide.sleep(4000);
+        Selenide.sleep(6000);
         return this;
     }
 
-    public PageWithHome checkRoutePage(String from, String where, String date) {
+    public PageWithHome checkRoutePage(String from, String to) {
         routePage.shouldHave(text(from));
-        routePage.shouldHave(text(where));
-        routePage.shouldHave(text(date));
+        routePage.shouldHave(text(to));
         return this;
     }
 
-    public PageWithHome checkInvalidRoutePage(String from, String where, String date) {
+    public PageWithHome checkRoutePageCityFrom(String from) {
+        routePageCityFrom.shouldHave(text(from));
+        return this;
+    }
+
+    public PageWithHome checkRoutePageCityTo(String to) {
+        routePageCityTo.shouldHave(text(to));
+        return this;
+    }
+
+    public PageWithHome checkInvalidRoutePage(String from, String to, String date) {
         invalidRoutePage.shouldHave(text(from));
-        invalidRoutePage.shouldHave(text(where));
+        invalidRoutePage.shouldHave(text(to));
         invalidRoutePage.shouldHave(text(date));
         return this;
     }
 
-    public PageWithHome checkFindHotel(String url) {
-        findHotelClick.shouldBe(visible);
+    public PageWithHome checkCarTransportationPage() {
+        carTransportationPage.shouldHave(text("Укажите данные о транспортном средстве, об отправителе и получателе"));
+        return this;
+    }
+
+    public PageWithHome checkAnimalsTransportationPage() {
+        animalsTransportationPage.shouldHave(text("Заявление об оказании услуги перевозки животных"));
+        return this;
+    }
+
+    public PageWithHome chooseTrainAndTypeSeat(String train, String typeSeat) {
+        $("[aria-label=" + train + "]").$(byText(typeSeat)).click(); // train должен быть такого типа: "Поезд 111А"
+        return this;
+    }
+
+    public PageWithHome chooseTypeSeat(String typeSeat) {
+        $("[data-testid=search-result-railway-card]").$(byText(typeSeat)).click();
+        Selenide.sleep(500);
+        return this;
+    }
+
+    public PageWithHome chooseAvailableSeat() {
+        availableSeat.click();
+        return this;
+    }
+
+    public PageWithHome chooseSpecificSeat(String numberSeat) {
+        $("#Seat" + numberSeat).click();
+        return this;
+    }
+
+    public PageWithHome clickContinue() {
+        Selenide.executeJavaScript("window.scrollBy(0,500);");
+        Selenide.sleep(500);
+        continueButton.click();
+        return this;
+    }
+
+    public PageWithHome clickEntryTicketPage() {
+        entryTicketPage.click();
+        return this;
+    }
+
+    public PageWithHome loginInputTicketPage(String login) {
+        loginInputTicketPage.setValue(login);
+        return this;
+    }
+
+    public PageWithHome passwordInputTicketPage(String password) {
+        passwordInputTicketPage.setValue(password);
+        return this;
+    }
+
+    public PageWithHome clickEntryButtonTicketPage() {
+        entryButtonTicketPage.click();
+        Selenide.sleep(3000);
+        return this;
+    }
+
+    public PageWithHome checkAutorisationTicketPage() {
+        logoutTicketPage.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome clickLogoutTicketPage() {
+        logoutTicketPage.click();
+        return this;
+    }
+
+    public PageWithHome clickCloseSideMenuButton() {
+        closeSideMenuButton.click();
+        return this;
+    }
+
+    public PageWithHome clickChoosePassengerButton() {
+        choosePassengerButton.click();
+        return this;
+    }
+
+    public PageWithHome checkSnils() {
+        snils.shouldHave(text("Введите СНИЛС *"));
+        return this;
+    }
+
+    public PageWithHome inputSnils(String snilsNumbers) {
+        snilsInput.setValue(snilsNumbers);
+        return this;
+    }
+
+    public PageWithHome choosePassenger(String passenger) {
+        $(".ui-kit-options").$(byText(passenger)).click();
+        return this;
+    }
+
+    public PageWithHome clickMakeOrderButton() {
+        makeOrderButton.click();
+        return this;
+    }
+
+    public PageWithHome checkOrderPage() {
+        payButton.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome clickFindHotel() {
         findHotelClick.click();
-        findHotelCheckedCheckbox.shouldBe(visible);
+        return this;
+    }
+
+    public PageWithHome checkCheckboxFindHotel() {
+        findHotelCheckedCheckbox.shouldBe(visible);;
+        return this;
+    }
+
+    public PageWithHome clickTravelRZD() {
         clickTravelRZD.click();
+        return this;
+    }
+
+    public PageWithHome checkTravelRZDPage(String url) {
         switchTo().window(1);
         webdriver().shouldHave(url(url));
-        return this;
-    }
-
-    public PageWithHome checkPassengersDropList(String value) {
-        dropdownPassengersList.shouldHave(text(value));
-        return this;
-    }
-
-    public PageWithHome plusCountAdult(Integer value) {
-        for (int i = 0; i < value; i++) {
-            plusAdultPassenger.click();
-        }
-        return this;
-    }
-
-    public PageWithHome minusCountAdult(Integer value) {
-        for (int i = 0; i < value; i++) {
-            minusAdultPassenger.click();
-        }
-        return this;
-    }
-
-//    public PageWithHome plusCountBabyWithPlace(Integer value) {
-//        for (int i = 0; i < value; i++) {
-//            plusBabyWithPlace.click();
-//        }
-//        return this;
-//    }
-//
-//    public PageWithHome minusCountBabyWithPlace(Integer value) {
-//        for (int i = 0; i < value; i++) {
-//            minusBabyWithPlace.click();
-//        }
-//        return this;
-//    }
-
-//    public PageWithHome plusCountBabyWithoutPlace(Integer value) {
-//        for (int i = 0; i < value; i++) {
-//            plusBabyWithoutPlace.click();
-//        }
-//        return this;
-//    }
-
-//    public PageWithHome minusCountBabyWithoutPlace(Integer value) {
-//        for (int i = 0; i < value; i++) {
-//            minusBabyWithoutPlace.click();
-//        }
-//        return this;
-//    }
-
-    public PageWithHome chooseInvalid() {
-        forInvalid.click();
         return this;
     }
 
@@ -530,7 +779,7 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome onlineChatClick() {
+    public PageWithHome clickOnlineChat() {
         onlineChat.click();
         return this;
     }
@@ -557,33 +806,33 @@ public class PageWithHome {
         return this;
     }
 
-    public PageWithHome checkPageFreightTransportation(String value) {
-        pageFreightTransportation.shouldHave(text(value));
+    public PageWithHome checkPageFreightTransportation(String words) {
+        freightTransportationPage.shouldHave(text(words));
         return this;
     }
 
-    public PageWithHome checkPageCompany(String value) {
-        pageCompany.shouldHave(text(value));
+    public PageWithHome checkPageCompany(String words) {
+        companyPage.shouldHave(text(words));
         return this;
     }
 
-    public PageWithHome checkPageWorkInRZD(String value) {
-        pageWorkInRZD.shouldHave(text(value));
+    public PageWithHome checkPageWorkInRZD(String words) {
+        workInRZDPage.shouldHave(text(words));
         return this;
     }
 
-    public PageWithHome checkPageContacts(String value) {
-        pageContacts.shouldHave(text(value));
+    public PageWithHome checkPageContacts(String words) {
+        contactsPage.shouldHave(text(words));
         return this;
     }
 
     public PageWithHome checkVisuallyImpaired() {
-        pageVisuallyImpaired.shouldHave(text("Обычная версия сайта"));
+        visuallyImpairedPage.shouldHave(text("Обычная версия сайта"));
         return this;
     }
 
     public PageWithHome checkEntryHeader() {
-        header.shouldHave(text("Вход"));
+        headerEntryForm.shouldHave(text("Вход"));
         return this;
     }
 
@@ -598,7 +847,7 @@ public class PageWithHome {
     }
 
     public PageWithHome checkOpenSearch() {
-        openSearch.shouldHave(text("Найти"));
+        searchButton.shouldHave(text("Найти"));
         return this;
     }
 

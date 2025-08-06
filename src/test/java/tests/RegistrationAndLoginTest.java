@@ -26,8 +26,8 @@ public class RegistrationAndLoginTest extends TestBase {
                 .openPage()
                 .pressEntry()
                 .checkHeader("Вход")
-                .loginInput("swagoutbaby")
-                .passwordInput("dubZgePMCKb5qvx")
+                .loginInput("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
+                .passwordInput("password") // Нужно ввести валидный пароль для корректного проведения тестирования
                 .entryButtonClick()
                 .profileButtonClick()
                 .checkAutorization("Мой профиль");
@@ -61,6 +61,41 @@ public class RegistrationAndLoginTest extends TestBase {
                 .entryButtonClick()
                 .checkErrorEmptyLogin("Это поле необходимо заполнить")
                 .checkErrorEmptyPassword("Это поле необходимо заполнить");
+    }
+
+    @Test
+    @DisplayName("Проверка функции 'Забыли пароль'")
+    @Tag("smoke")
+    void forgotPasswordTest() {
+        pageWithEntry
+                .openPage()
+                .pressEntry()
+
+                .clickForgotPassword()
+
+                .checkForgotPasswordForm("Восстановление регистрационных данных")
+                .checkForgotPasswordForm("Если Вы забыли пароль, но помните логин: введите логин и адрес e-mail," +
+                        " указанные при регистрации.")
+                .checkForgotPasswordForm("Если Вы забыли логин: введите адрес e-mail, указанный при регистрации.")
+                .checkForgotPasswordForm("Если введенные Вами данные верны, Вы получите на e-mail письмо с дальнейшими инструкциями.")
+                .checkForgotPasswordForm("Логин")
+                .checkForgotPasswordForm("Email")
+                .checkForgotPasswordForm("Защитный код")
+                .checkForgotPasswordForm("Прослушать")
+                .checkForgotPasswordForm("Отмена")
+                .checkForgotPasswordForm("Восстановить")
+
+                .inputLoginForgotPassword("$$$$")
+                .clickRecoverPasswordButton()
+                .clickRecoverPasswordButton()
+                .checkErrorEmailForgotPassword("Это поле необходимо заполнить")
+                .checkErrorCaptchaForgotPassword("Это поле необходимо заполнить")
+                .checkErrorMessageForgotPassword("Учетная запись не найдена")
+
+                .inputEmailForgotPassword("$$$$")
+                .inputCaptchaForgotPassword("444")
+                .checkErrorEmailForgotPassword("Неверный формат Email")
+                .checkErrorCaptchaForgotPassword("Указан неверный код подтверждения");
     }
 
     // Тестирование формы регистрации
@@ -161,5 +196,40 @@ public class RegistrationAndLoginTest extends TestBase {
                 .checkErrorEmail("Email не уникален")
                 .checkErrorLogin("Логин уже занят")
                 .checkErrorEntryMessage("В форме обнаружены ошибки");
+    }
+
+    @Test
+    @DisplayName("Проверка профиля")
+    @Tag("smoke")
+    void profileTest() {
+        pageWithEntry
+                .openPage()
+                .pressEntry()
+                .checkHeader("Вход")
+                .loginInput("swagoutbaby")
+                .passwordInput("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .entryButtonClick()
+                .profileButtonClick()
+                .checkNameInHeader("Чурин Дмитрий")
+                .checkAutorization("Мой профиль")
+                .checkMyProfileList("Мои данные")
+                .checkMyProfileList("Смена пароля")
+                .checkMyProfileList("Мои фото/видео")
+                .checkMyProfileList("Подписки")
+                .checkMyProfileList("Подарочные карты ДОСС")
+
+                .checkMyData("Мои данные")
+                .checkMyData("Мой логин")
+                .checkMyData("Фамилия")
+                .checkMyData("Имя")
+                .checkMyData("Отчество")
+                .checkMyData("E-mail")
+                .checkMyData("Телефон")
+                .checkMyData("Дата рождения")
+                .checkMyData("Пол")
+                .checkMyData("согласие")
+                .checkMyData("Сохранить");
+
+                $(".j-profile-logout").click();
     }
 }
