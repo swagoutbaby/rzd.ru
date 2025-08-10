@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,29 +22,29 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @DisplayName("Вход. Успешный вход по логину и паролю")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void LoginSuccessTest() {
         pageWithEntry
                 .openPage()
                 .pressEntry()
-                .checkHeader("Вход")
-                .loginInput("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
-                .passwordInput("password") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .inputLogin("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
+                .inputPassword("dubZgePMCKb5qvx") // Нужно ввести валидный пароль для корректного проведения тестирования
                 .entryButtonClick()
-                .profileButtonClick()
-                .checkAutorization("Мой профиль");
-                $(".j-profile-logout").click();
+                .clickProfileButton()
+                .checkMyProfile("Мой профиль")
+                .clickLogout();
     }
 
     @Test
     @DisplayName("Вход. Некорректные данные")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void LoginInvalidValuesTest() {
         pageWithEntry
                 .openPage()
                 .pressEntry()
-                .checkHeader("Вход")
-                .loginInput(FakerUtil.generateLogin())
-                .passwordInput(FakerUtil.generatePassword())
+                .inputLogin(FakerUtil.generateLogin())
+                .inputPassword(FakerUtil.generatePassword())
                 .entryButtonClick()
                 .checkErrorEntryMessage("Ошибка: Неверное имя пользователя или пароль");
     }
@@ -51,13 +52,13 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @DisplayName("Вход. Пустое поле ввода логина и пароля")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void LoginEmptyValuesTest() {
         pageWithEntry
                 .openPage()
                 .pressEntry()
-                .checkHeader("Вход")
-                .loginInput("")
-                .passwordInput("")
+                .inputLogin("")
+                .inputPassword("")
                 .entryButtonClick()
                 .checkErrorEmptyLogin("Это поле необходимо заполнить")
                 .checkErrorEmptyPassword("Это поле необходимо заполнить");
@@ -66,6 +67,7 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @DisplayName("Проверка функции 'Забыли пароль'")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void forgotPasswordTest() {
         pageWithEntry
                 .openPage()
@@ -73,21 +75,9 @@ public class RegistrationAndLoginTest extends TestBase {
 
                 .clickForgotPassword()
 
-                .checkForgotPasswordForm("Восстановление регистрационных данных")
-                .checkForgotPasswordForm("Если Вы забыли пароль, но помните логин: введите логин и адрес e-mail," +
-                        " указанные при регистрации.")
-                .checkForgotPasswordForm("Если Вы забыли логин: введите адрес e-mail, указанный при регистрации.")
-                .checkForgotPasswordForm("Если введенные Вами данные верны, Вы получите на e-mail письмо с дальнейшими инструкциями.")
-                .checkForgotPasswordForm("Логин")
-                .checkForgotPasswordForm("Email")
-                .checkForgotPasswordForm("Защитный код")
-                .checkForgotPasswordForm("Прослушать")
-                .checkForgotPasswordForm("Отмена")
-                .checkForgotPasswordForm("Восстановить")
-
                 .inputLoginForgotPassword("$$$$")
                 .clickRecoverPasswordButton()
-                .clickRecoverPasswordButton()
+                .clickRecoverPasswordButton() //Два раза для появления всех ошибок
                 .checkErrorEmailForgotPassword("Это поле необходимо заполнить")
                 .checkErrorCaptchaForgotPassword("Это поле необходимо заполнить")
                 .checkErrorMessageForgotPassword("Учетная запись не найдена")
@@ -103,6 +93,7 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @DisplayName("Регистрация. Корректные значения")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void RegisterSuccessfulTest() {
         pageWithRegistration
                 .openPage()
@@ -110,14 +101,17 @@ public class RegistrationAndLoginTest extends TestBase {
                 .pressEntry()
                 .pressRegistration()
                 .checkHeader("Регистрация")
-                .emailInput(FakerUtil.generateEmail())
-                .loginInput(FakerUtil.generateLogin())
-                .passwordInput("12345-Gg")
-                .passwordConfirmInput("12345-Gg")
-                .firstNameInput(FakerUtil.generateFirstName())
-                .lastNameInput(FakerUtil.generateLastName())
-                .numberInput(FakerUtil.generatePhoneNumber())
-                .agreementClick()
+                .inputEmail(FakerUtil.generateEmail())
+                .inputLogin(FakerUtil.generateLogin())
+                .inputPassword("12345-Gg")
+                .inputPasswordConfirm("12345-Gg")
+                .inputFirstName(FakerUtil.generateFirstName())
+                .inputLastName(FakerUtil.generateLastName())
+                .inputNumber(FakerUtil.generatePhoneNumber())
+                .clickAgreement()
+                .clickAgreement()
+                .clickAgreement()
+                // Три клика т.к для проверки того, что ошибка пропала, надо чтобы она появилась, после второго клика она появляется
                 .checkEmailBorderColor()
                 .checkLoginBorderColor()
                 .checkPasswordBorderColor()
@@ -131,6 +125,7 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @DisplayName("Регистрация. Пустые значения")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void RegisterEmptyValuesTest() {
         pageWithRegistration
                 .openPage()
@@ -138,7 +133,7 @@ public class RegistrationAndLoginTest extends TestBase {
                 .pressEntry()
                 .pressRegistration()
                 .checkHeader("Регистрация")
-                .registerButtonClick()
+                .clickRegisterButton()
                 .checkErrorEmail("Поле обязательное")
                 .checkErrorLogin("Поле обязательное")
                 .checkErrorPassword("Поле обязательное")
@@ -146,13 +141,14 @@ public class RegistrationAndLoginTest extends TestBase {
                 .checkErrorFirstName("Поле обязательное")
                 .checkErrorLastName("Поле обязательное")
                 .checkErrorEmptyAgreement("Требуется согласие")
-                .checkErrorEmptyCaptcha("Требуется указать код подтверждения")
+                .checkErrorCaptcha("Требуется указать код подтверждения")
                 .checkErrorEntryMessage("В форме обнаружены ошибки");
     }
 
     @Test
     @DisplayName("Регистрация. Некорректные значения")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void RegisterInvalidValuesTest() {
         pageWithRegistration
                 .openPage()
@@ -160,15 +156,15 @@ public class RegistrationAndLoginTest extends TestBase {
                 .pressEntry()
                 .pressRegistration()
                 .checkHeader("Регистрация")
-                .registerButtonClick()
-                .emailInput(FakerUtil.generateInvalidEmail())
-                .loginInput(FakerUtil.generateInvalidLogin())
-                .passwordInput(FakerUtil.generateInvalidPassword())
-                .passwordConfirmInput(FakerUtil.generateInvalidPassword())
-                .firstNameInput(FakerUtil.generateInvalidFirstName())
-                .lastNameInput(FakerUtil.generateInvalidLastName())
-                .numberInput(FakerUtil.generateInvalidPhoneNumber())
-                .captchaInput("123")
+                .clickRegisterButton()
+                .inputEmail(FakerUtil.generateInvalidEmail())
+                .inputLogin(FakerUtil.generateInvalidLogin())
+                .inputPassword(FakerUtil.generateInvalidPassword())
+                .inputPasswordConfirm(FakerUtil.generateInvalidPassword())
+                .inputFirstName(FakerUtil.generateInvalidFirstName())
+                .inputLastName(FakerUtil.generateInvalidLastName())
+                .inputNumber(FakerUtil.generateInvalidPhoneNumber())
+                .inputCaptcha("123")
                 .checkErrorEmail("Неверный формат Email")
                 .checkErrorLogin("Недопустимый формат логина")
                 .checkErrorPassword("Не соответствует требованиям безопасности")
@@ -176,13 +172,14 @@ public class RegistrationAndLoginTest extends TestBase {
                 .checkErrorFirstName("Имя указано неверно")
                 .checkErrorLastName("Фамилия указана неверно")
                 .checkErrorInvalidNumber("Формат телефона +79xxxxxxxxx")
-                .checkErrorEmptyCaptcha("Указан неверный код подтверждения")
+                .checkErrorCaptcha("Указан неверный код подтверждения")
                 .checkErrorEntryMessage("В форме обнаружены ошибки");
     }
 
     @Test
     @DisplayName("Регистрация. Не уникальные значения")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void RegisterNonUniqueValuesTest() {
         pageWithRegistration
                 .openPage()
@@ -190,9 +187,9 @@ public class RegistrationAndLoginTest extends TestBase {
                 .pressEntry()
                 .pressRegistration()
                 .checkHeader("Регистрация")
-                .registerButtonClick()
-                .emailInput("mister.dim2017111@gmail.com")
-                .loginInput("swagoutbaby")
+                .clickRegisterButton()
+                .inputEmail("mister.dim2017111@gmail.com")
+                .inputLogin("swagoutbaby")
                 .checkErrorEmail("Email не уникален")
                 .checkErrorLogin("Логин уже занят")
                 .checkErrorEntryMessage("В форме обнаружены ошибки");
@@ -201,35 +198,19 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @DisplayName("Проверка профиля")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void profileTest() {
         pageWithEntry
                 .openPage()
                 .pressEntry()
-                .checkHeader("Вход")
-                .loginInput("swagoutbaby")
-                .passwordInput("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .inputLogin("swagoutbaby")
+                .inputPassword("dubZgePMCKb5qvx") // Нужно ввести валидный пароль для корректного проведения тестирования
                 .entryButtonClick()
-                .profileButtonClick()
-                .checkNameInHeader("Чурин Дмитрий")
-                .checkAutorization("Мой профиль")
-                .checkMyProfileList("Мои данные")
-                .checkMyProfileList("Смена пароля")
-                .checkMyProfileList("Мои фото/видео")
-                .checkMyProfileList("Подписки")
-                .checkMyProfileList("Подарочные карты ДОСС")
+                .clickProfileButton()
+                .checkMyProfile("Чурин Дмитрий")
+                .checkMyProfile("Мои данные")
+                .checkMyProfile("Смена пароля")
 
-                .checkMyData("Мои данные")
-                .checkMyData("Мой логин")
-                .checkMyData("Фамилия")
-                .checkMyData("Имя")
-                .checkMyData("Отчество")
-                .checkMyData("E-mail")
-                .checkMyData("Телефон")
-                .checkMyData("Дата рождения")
-                .checkMyData("Пол")
-                .checkMyData("согласие")
-                .checkMyData("Сохранить");
-
-                $(".j-profile-logout").click();
+                .clickLogout();
     }
 }

@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Condition.text;
@@ -14,11 +15,9 @@ public class PageWithEntry {
     private final SelenideElement
     pressEntry = $(".j-auth-open.username"),
     cookieButton = $(".cookie-alert__btn"),
-    header = $(".j-tab.form-tab_link.active"),
     login = $("[placeholder=Логин]"),
     password = $("[placeholder=Пароль]"),
     forgotPassword = $(".j-forgot-password"),
-    forgotPasswordForm = $(".j-pwd-reminder"),
     forgotPasswordLogin = $("[name='LOGIN']"),
     forgotPasswordEmail = $("[data-test-id=recovery-email]"),
     forgotPasswordCaptcha = $("[data-test-id=recovery-captcha]"),
@@ -31,141 +30,128 @@ public class PageWithEntry {
     errorEmptyPassword = $("[placeholder=Пароль]").sibling(0),
     errorEntryMessage = $(".auth-error"),
     profileButton = $(".j-profile-username"),
-    nameInHeader = $(".j-acc-name"),
-    myProfileList = $(".page-menu__list"),
-    myData = $("[data-test-id=accountTabDataForm]"),
-    myProfile = $(".page-menu__title"),
+    myProfile = $(".body-page-5312"),
     logout = $(".j-profile-logout");
 
-
-    public PageWithEntry openPage () {
+    @Step("Открыть главную страницу")
+    public PageWithEntry openPage() {
         open("");
         return this;
     }
 
+    @Step("Закрыть уведомление о Cookie")
     public PageWithEntry closeCookie() {
-        if (cookieButton.isDisplayed())
-        {
-            cookieButton.click();
-        }
+        cookieButton.click();
         return this;
     }
 
-    public PageWithEntry pressEntry () {
+    @Step("Открыть окно входа в аккаунт")
+    public PageWithEntry pressEntry() {
         pressEntry.click();
         return this;
     }
 
-    public PageWithEntry checkHeader (String HeaderText) {
-        header.shouldHave(text(HeaderText));
-        header.shouldBe(cssValue("color", "rgba(226, 26, 26, 1)"));
-        return this;
-    }
-
-    public PageWithEntry loginInput (String Login) {
+    @Step("Ввести логин")
+    public PageWithEntry inputLogin(String Login) {
         login.setValue(Login);
         return this;
     }
 
-    public PageWithEntry passwordInput (String Password) {
+    @Step("Ввести пароль")
+    public PageWithEntry inputPassword(String Password) {
         password.setValue(Password);
         return this;
     }
 
-    public PageWithEntry clickForgotPassword () {
+    @Step("Открыть окно 'Забыли пароль?'")
+    public PageWithEntry clickForgotPassword() {
         forgotPassword.click();
         return this;
     }
 
-    public PageWithEntry checkForgotPasswordForm (String text) {
-        forgotPasswordForm.shouldHave(text(text));
-        return this;
-    }
-
-    public PageWithEntry inputLoginForgotPassword (String text) {
+    @Step("Ввести логин в окне 'Забыли пароль?'")
+    public PageWithEntry inputLoginForgotPassword(String text) {
         forgotPasswordLogin.setValue(text);
         return this;
     }
 
-    public PageWithEntry inputEmailForgotPassword (String text) {
+    @Step("Ввести емеил в окне 'Забыли пароль?'")
+    public PageWithEntry inputEmailForgotPassword(String text) {
         forgotPasswordEmail.setValue(text);
         return this;
     }
 
-    public PageWithEntry inputCaptchaForgotPassword (String text) {
+    @Step("Ввести капчу в окне 'Забыли пароль?'")
+    public PageWithEntry inputCaptchaForgotPassword(String text) {
         forgotPasswordCaptcha.setValue(text);
         return this;
     }
 
-    public PageWithEntry checkErrorEmailForgotPassword (String errorText) {
+    @Step("Проверка отображения ошибки в поле емеила")
+    public PageWithEntry checkErrorEmailForgotPassword(String errorText) {
         errorEmailForgotPassword.shouldHave(text(errorText));
         return this;
     }
 
-    public PageWithEntry checkErrorCaptchaForgotPassword (String errorText) {
+    @Step("Проверка отображения ошибки в поле капчи")
+    public PageWithEntry checkErrorCaptchaForgotPassword(String errorText) {
         errorCaptchaForgotPassword.shouldHave(text(errorText));
         return this;
     }
 
-    public PageWithEntry checkErrorMessageForgotPassword (String errorText) {
+    @Step("Проверка отображения сообщения-ошибки восстановления пароля ")
+    public PageWithEntry checkErrorMessageForgotPassword(String errorText) {
         errorMessageForgotPassword.shouldHave(text(errorText));
         return this;
     }
 
-    public PageWithEntry clickRecoverPasswordButton () {
+    @Step("Нажать кнопку восстановить пароль")
+    public PageWithEntry clickRecoverPasswordButton() {
         recoverPasswordButton.click();
         return this;
     }
 
-    public PageWithEntry entryButtonClick () {
+    @Step("Нажать кнопку войти")
+    public PageWithEntry entryButtonClick() {
         entryButton.click();
         return this;
     }
 
-    public PageWithEntry checkErrorEmptyLogin (String ErrorText) {
+    @Step("Проверка отображения ошибки пустого поля логина")
+    public PageWithEntry checkErrorEmptyLogin(String ErrorText) {
         errorEmptyLogin.shouldHave(text(ErrorText));
         errorEmptyLogin.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
+    @Step("Проверка отображения ошибки пустого поля пароля")
     public PageWithEntry checkErrorEmptyPassword(String ErrorText) {
         errorEmptyPassword.shouldHave(text(ErrorText));
         errorEmptyPassword.shouldHave(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithEntry checkErrorEntryMessage (String ErrorText) {
+    @Step("Проверка отображения сообщения-ошибки входа")
+    public PageWithEntry checkErrorEntryMessage(String ErrorText) {
         errorEntryMessage.shouldHave(text(ErrorText));
         errorEntryMessage.shouldBe(cssValue("background-color", "rgba(226, 26, 26, 1)"));
         return this;
     }
 
-    public PageWithEntry profileButtonClick () {
+    @Step("Открыть профиль")
+    public PageWithEntry clickProfileButton() {
         profileButton.click();
         return this;
     }
 
-    public PageWithEntry checkMyProfileList (String text) {
-        myProfileList.shouldHave(text(text));
-        return this;
-    }
-
-    public PageWithEntry checkMyData (String text) {
-        myData.shouldHave(text(text));
-        return this;
-    }
-
-    public PageWithEntry checkNameInHeader (String text) {
-        nameInHeader.shouldHave(text(text));
-        return this;
-    }
-
-    public PageWithEntry checkAutorization (String text) {
+    @Step("Проверка отображения элементов профиля")
+    public PageWithEntry checkMyProfile(String text) {
         myProfile.shouldHave(text(text));
         return this;
     }
 
-    public PageWithEntry logoutClick () {
+    @Step("Выйти из аккаунта")
+    public PageWithEntry clickLogout() {
         logout.click();
         return this;
     }

@@ -1,5 +1,8 @@
 package tests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Owner;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,11 +12,20 @@ import pages.PageWithHome;
 
 public class HomeTests extends TestBase {
 
+    String loginRZD = "swagoutbaby"; // Нужно ввести валидный логин для входа в аккаунт РЖД
+    String passwordRZD = "dubZgePMCKb5qvx"; // Нужно ввести валидный пароль для входа в аккаунт РЖД
+    String fioRZD = "Чурин Дмитрий Владимирович"; // Нужно ввести валидные данные для выбора пассажира
+    String departureDateRZD = "8/25/2025";
+    String returnDateRZD = "8/30/2025";
+    String cityFromRZD = "Москва";
+    String cityToRZD = "Адлер";
+
     PageWithHome pageWithHome = new PageWithHome();
 
     @Test
     @DisplayName("Проверка главной страницы")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void homeTest() {
         pageWithHome
                 .openPage()
@@ -119,6 +131,7 @@ public class HomeTests extends TestBase {
     @Test
     @DisplayName("Проверка работы кнопок верхней строки ")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void logoHeaderTest() {
         pageWithHome
                 .openPage()
@@ -161,6 +174,7 @@ public class HomeTests extends TestBase {
     @Test
     @DisplayName("Проверка работы кнопок верхней подстроки")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void actionsHeaderTest() {
         pageWithHome
                 .openPage()
@@ -210,6 +224,7 @@ public class HomeTests extends TestBase {
     @Test
     @DisplayName("Проверка работы выбора пассажиров")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void passengerOptionsTest() {
         pageWithHome
                 .openPage()
@@ -250,6 +265,14 @@ public class HomeTests extends TestBase {
                 .clickForDisabledPersonCheckbox()
                 .clickAnimalCheckbox()
 
+                .plusCountAdult(1)
+                .minusCountAdult(1)
+
+                .plusCountBabyWithPlace(1)
+                .minusCountBabyWithPlace(1)
+
+                .plusCountBabyWithoutPlace(1)
+                .minusCountBabyWithoutPlace(1)
 
                 .plusCountBabyWithoutPlace(2)
                 .checkErrorNotice("Извините, количество детей без места в заказе не может быть больше количества пассажиров с местом.")
@@ -269,22 +292,26 @@ public class HomeTests extends TestBase {
     @Test
     @DisplayName("Проверка работы поиска маршрута. Валидные значения")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void routeValidSearchTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Москва")
-                .cityToInput("Казань")
-                .chooseDepartureDate("8/15/2025")
-                .chooseReturnDate("8/30/2025")
+                .cityFromInput(cityFromRZD)
+                .cityToInput(cityToRZD)
+                .chooseDepartureDate(departureDateRZD)
+                .chooseReturnDate(returnDateRZD)
                 .clickFindRoute()
-                .checkRoutePage("Москва", "Казань");
+                .checkRoutePageCityFrom(cityFromRZD)
+                .checkRoutePageCityTo(cityToRZD);
+
     }
 
     @Test
     @DisplayName("Проверка работы поиска маршрута. В один и тот же город")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void routeInvalidSearchTest() {
         pageWithHome
                 .openPage()
@@ -300,25 +327,27 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка работы смены направления")
-    @Tag("smoke")
+    @Tag("sanity")
+    @Owner("ChurinDmitiy")
     void swapCityTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Москва")
-                .cityToInput("Адлер")
-                .chooseDepartureDate("8/15/2025")
+                .cityFromInput(cityFromRZD)
+                .cityToInput(cityToRZD)
+                .chooseDepartureDate(departureDateRZD)
                 .clickNotNeedReturnTicket()
                 .clickSwapCity()
                 .clickFindRoute()
-                .checkRoutePageCityFrom("Адлер")
-                .checkRoutePageCityTo("Москва");
+                .checkRoutePageCityFrom(cityToRZD) // Т.к мы поменяли города местами,
+                .checkRoutePageCityTo(cityFromRZD); // в проверке города отправления, должен быть город назначения
     }
 
     @Test
     @DisplayName("Проверка перехода на travel.RZD")
     @Tag("smoke")
+    @Owner("ChurinDmitiy")
     void findHotelTravelRZDTest() {
         pageWithHome
                 .openPage()
@@ -332,22 +361,24 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка работы поиска")
-    @Tag("smoke")
+    @Tag("sanity")
+    @Owner("ChurinDmitiy")
     void searchTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
                 .clickSearch()
-                .searchInput("Москва")
+                .searchInput(cityFromRZD)
                 .clickSearchButton()
-                .checkKeywords("Москва")
-                .checkSearchResults("Москва");
+                .checkKeywords(cityFromRZD)
+                .checkSearchResults(cityFromRZD);
     }
 
     @Test
     @DisplayName("Проверка работы виртуального помощника")
-    @Tag("smoke")
+    @Tag("sanity")
+    @Owner("ChurinDmitiy")
     void virtualAssistantTest() {
         pageWithHome
                 .openPage()
@@ -373,22 +404,23 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка тестового сценария c перевозкой автомобиля")
-    @Tag("smoke")
+    @Tag("E2E")
+    @Owner("ChurinDmitiy")
     void carTransportationTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Москва")
-                .cityToInput("Адлер")
-                .chooseDepartureDate("8/20/2025")
+                .cityFromInput(cityFromRZD)
+                .cityToInput(cityToRZD)
+                .chooseDepartureDate(departureDateRZD)
                 .clickNotNeedReturnTicket()
                 .minusCountAdult(1)
                 .clickCarCheckbox()
                 .clickFindRoute()
                 .clickEntryTicketPage()
-                .loginInputTicketPage("swagoutbaby")
-                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .loginInputTicketPage(loginRZD)
+                .passwordInputTicketPage(passwordRZD) // Нужно ввести валидный пароль для корректного проведения тестирования
                 .clickEntryButtonTicketPage()
                 .chooseTypeSeat("Перевозка автомобиля (мототехники)")
                 .chooseTypeSeat("Перевозка автомобиля (мототехники)") // Надо кликнуть два раза
@@ -399,22 +431,23 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка тестового сценария c перевозкой животного без сопровождающего")
-    @Tag("smoke")
+    @Tag("E2E")
+    @Owner("ChurinDmitiy")
     void animalsTransportationTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Москва")
-                .cityToInput("Адлер")
-                .chooseDepartureDate("8/20/2025")
+                .cityFromInput(cityFromRZD)
+                .cityToInput(cityToRZD)
+                .chooseDepartureDate(departureDateRZD)
                 .clickNotNeedReturnTicket()
                 .minusCountAdult(1)
                 .clickAnimalCheckbox()
                 .clickFindRoute()
                 .clickEntryTicketPage()
-                .loginInputTicketPage("swagoutbaby")
-                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .loginInputTicketPage(loginRZD)
+                .passwordInputTicketPage(passwordRZD) // Нужно ввести валидный пароль для корректного проведения тестирования
                 .clickEntryButtonTicketPage()
                 .chooseTypeSeat("Перевозка животных без сопровождающего")
                 .chooseTypeSeat("Перевозка животных без сопровождающего") // Надо кликнуть два раза
@@ -426,26 +459,27 @@ public class HomeTests extends TestBase {
     @Test
     @DisplayName("Проверка тестового сценария c 1 пассажиром")
     @Tag("E2E")
+    @Owner("ChurinDmitiy")
     void onePerson_e2eTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Тюмень")
-                .cityToInput("Екатерибург")
-                .chooseDepartureDate("8/15/2025")
+                .cityFromInput(cityFromRZD)
+                .cityToInput(cityToRZD)
+                .chooseDepartureDate(departureDateRZD)
                 .clickNotNeedReturnTicket()
                 .clickSwapCity()
                 .clickFindRoute()
                 .clickEntryTicketPage()
-                .loginInputTicketPage("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
-                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .loginInputTicketPage(loginRZD) // Нужно ввести валидный логин для корректного проведения тестирования
+                .passwordInputTicketPage(passwordRZD) // Нужно ввести валидный пароль для корректного проведения тестирования
                 .clickEntryButtonTicketPage()
                 .chooseTypeSeat("Плацкартный")
                 .chooseAvailableSeat()
                 .clickContinue()
                 .clickChoosePassengerButton()
-                .choosePassenger("Степаненко Влад Дмитриевич") // Нужно ввести валидное ФИО для корректного проведения тестирования
+                .choosePassenger(fioRZD) // Нужно ввести валидное ФИО для корректного проведения тестирования
                 .clickEntryTicketPage()
                 .clickLogoutTicketPage();
 //                .clickMakeOrderButton() // Закомментил чтобы не заказывать билеты постоянно, для полноценной проверки раскосматить
@@ -455,26 +489,27 @@ public class HomeTests extends TestBase {
     @Test
     @DisplayName("Проверка тестового сценария c 1 пассажиром инвалидом")
     @Tag("E2E")
+    @Owner("ChurinDmitiy")
     void oneDisabledPerson_e2eTest() {
         pageWithHome
                 .openPage()
                 .closeCookie()
 
-                .cityFromInput("Москва")
-                .cityToInput("Адлер")
-                .chooseDepartureDate("8/20/2025")
+                .cityFromInput(cityFromRZD)
+                .cityToInput(cityToRZD)
+                .chooseDepartureDate(departureDateRZD)
                 .clickNotNeedReturnTicket()
                 .clickForDisabledPersonCheckbox()
                 .clickFindRoute()
                 .clickEntryTicketPage()
-                .loginInputTicketPage("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
-                .passwordInputTicketPage("") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .loginInputTicketPage(loginRZD) // Нужно ввести валидный логин для корректного проведения тестирования
+                .passwordInputTicketPage(passwordRZD) // Нужно ввести валидный пароль для корректного проведения тестирования
                 .clickEntryButtonTicketPage()
                 .chooseTypeSeat("Купе (для инвалидов)")
                 .chooseAvailableSeat()
                 .clickContinue()
                 .clickChoosePassengerButton()
-                .choosePassenger("Степаненко Влад Дмитриевич") // Нужно ввести валидное ФИО для корректного проведения тестирования
+                .choosePassenger(fioRZD) // Нужно ввести валидное ФИО для корректного проведения тестирования
                 .checkSnils()
                 .clickEntryTicketPage()
                 .clickLogoutTicketPage();
