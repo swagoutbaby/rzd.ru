@@ -1,8 +1,6 @@
 package tests;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Owner;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -327,7 +325,7 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка работы смены направления")
-    @Tag("sanity")
+    @Tag("smoke")
     @Owner("ChurinDmitiy")
     void swapCityTest() {
         pageWithHome
@@ -361,7 +359,7 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка работы поиска")
-    @Tag("sanity")
+    @Tag("smoke")
     @Owner("ChurinDmitiy")
     void searchTest() {
         pageWithHome
@@ -377,7 +375,7 @@ public class HomeTests extends TestBase {
 
     @Test
     @DisplayName("Проверка работы виртуального помощника")
-    @Tag("sanity")
+    @Tag("smoke")
     @Owner("ChurinDmitiy")
     void virtualAssistantTest() {
         pageWithHome

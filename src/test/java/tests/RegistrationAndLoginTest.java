@@ -8,8 +8,6 @@ import pages.PageWithEntry;
 import pages.PageWithRegistration;
 import utils.FakerUtil;
 
-import static com.codeborne.selenide.Selenide.$;
-
 @Tag("regression")
 
 public class RegistrationAndLoginTest extends TestBase {

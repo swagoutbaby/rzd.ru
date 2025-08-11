@@ -134,7 +134,6 @@ public class PageWithHome {
             iconMotorcycle = $(shadowDeepCss(".route-search__options")).$("[icon=motorcycle-transportation]"),
 
             findRoute = $(shadowDeepCss(".route-search__submit-button")),
-            routePage = $(".searchresults__list"),
             routePageCityFrom = $(".card-route__station--from"),
             routePageCityTo = $(".card-route__station--to"),
             invalidRoutePage = $(".searchresults__cards-wrapper"),
