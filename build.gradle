@@ -74,3 +74,9 @@ task E2E_test(type: Test) {
         includeTags("E2E")
     }
 }
+
+task test_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("test")
+    }
+}
