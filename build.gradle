@@ -35,7 +35,8 @@ dependencies {
 }
 
 tasks.withType(Test) {
-    useJUnitPlatform()
+    systemProperties(System.getProperties()) // Передача системных свойств в задачи тестирования
+    useJUnitPlatform() // Указание использовать JUnit Platform для запуска тестов
 
     testLogging {
         lifecycle {
@@ -44,9 +45,22 @@ tasks.withType(Test) {
         }
     }
 }
+//эти таски создаются для jenkins
 
 task regression_test(type: Test) {
     useJUnitPlatform {
         includeTags("regression")
+    }
+}
+
+task smoke_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("smoke")
+    }
+}
+
+task E2E_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("E2E")
     }
 }
