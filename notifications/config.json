@@ -1,0 +1,18 @@
+{
+  "base": {
+    "logo": "rzd.png",
+    "project": "${JOB NAME}",
+    "environment": "${ENVIRONMENT}",
+    "comment": "${COMMENT}",
+    "reportLink": "${BUILD_URL}",
+    "language": "en",
+    "messenger": "telegram",
+    "allureFolder": "allure-report",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "8267707324:AAE9WwYNrSJapzEEsUyjFGlrthm8cvBvxPs",
+    "chat": "-1002784889581",
+    "replyTo": ""
+  }
+}

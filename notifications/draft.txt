@@ -1,0 +1,8 @@
+token:
+
+8267707324:AAE9WwYNrSJapzEEsUyjFGlrthm8cvBvxPs
+
+https://api.telegram.org/bot8267707324:AAE9WwYNrSJapzEEsUyjFGlrthm8cvBvxPs/getUpdates
+
+id:
+-1002784889581

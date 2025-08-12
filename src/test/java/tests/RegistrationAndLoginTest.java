@@ -19,7 +19,7 @@ public class RegistrationAndLoginTest extends TestBase {
 
     @Test
     @DisplayName("Вход. Успешный вход по логину и паролю")
-    @Tag("smoke")
+    @Tag("test")
     @Owner("ChurinDmitiy")
     void LoginSuccessTest() {
         pageWithEntry

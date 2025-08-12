@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -36,6 +37,7 @@ public class PageWithEntry {
     @Step("Открыть главную страницу")
     public PageWithEntry openPage() {
         open("");
+        Selenide.sleep(3000);
         return this;
     }
 

@@ -45,6 +45,16 @@ tasks.withType(Test) {
         }
     }
 }
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties()) // Повторная передача системных свойств в задачи тестирования
+    useJUnitPlatform {
+        if (System.getProperty("type") != null && !System.getProperty("type").isEmpty()) { // Включение только тех тестов, которые помечены определенными тегами, если задан системный параметр "type"
+            includeTags System.getProperty("type")
+        }
+    }
+}
+
 //эти таски создаются для jenkins
 
 task regression_test(type: Test) {
