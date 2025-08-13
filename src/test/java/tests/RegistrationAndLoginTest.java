@@ -218,6 +218,7 @@ public class RegistrationAndLoginTest extends TestBase {
     @Test
     @Tag("test")
     void fakeTest() {
-        System.out.println("test");
+        pageWithEntry
+                .openPage();
     }
 }
