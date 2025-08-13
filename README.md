@@ -87,13 +87,13 @@ Allure используется для генерации подробных о�
 ### Главная страница
 
 <p align="center">  
-<img title="Allure Overview Dashboard" src="images/screenshots/allure1.png" width="850">  
+<img title="Allure Overview Dashboard" src="images/screenshots/allure.png" width="850">  
 </p>
 
 ### Пример теста
 
   <p align="center">  
-<img title="Allure Graphics" src="images/screenshots/allure.png" width="850">
+<img title="Allure Graphics" src="images/screenshots/allure1.png" width="850">
 </p>
 
 <a id="telegram"></a>
