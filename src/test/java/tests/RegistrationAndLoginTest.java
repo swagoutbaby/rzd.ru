@@ -12,6 +12,9 @@ import utils.FakerUtil;
 
 public class RegistrationAndLoginTest extends TestBase {
 
+    String loginRZD = ""; // Нужно ввести валидный логин для входа в аккаунт РЖД
+    String passwordRZD = ""; // Нужно ввести валидный пароль для входа в аккаунт РЖД
+
     PageWithEntry pageWithEntry = new PageWithEntry();
     PageWithRegistration pageWithRegistration = new PageWithRegistration();
 
@@ -19,14 +22,14 @@ public class RegistrationAndLoginTest extends TestBase {
 
     @Test
     @DisplayName("Вход. Успешный вход по логину и паролю")
-    @Tag("test")
+    @Tag("smoke")
     @Owner("ChurinDmitiy")
     void LoginSuccessTest() {
         pageWithEntry
                 .openPage()
                 .pressEntry()
-                .inputLogin("swagoutbaby") // Нужно ввести валидный логин для корректного проведения тестирования
-                .inputPassword("dubZgePMCKb5qvx") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .inputLogin(loginRZD) // Нужно ввести валидный логин для корректного проведения тестирования
+                .inputPassword(passwordRZD) // Нужно ввести валидный пароль для корректного проведения тестирования
                 .entryButtonClick()
                 .clickProfileButton()
                 .checkMyProfile("Мой профиль")
@@ -201,8 +204,8 @@ public class RegistrationAndLoginTest extends TestBase {
         pageWithEntry
                 .openPage()
                 .pressEntry()
-                .inputLogin("swagoutbaby")
-                .inputPassword("dubZgePMCKb5qvx") // Нужно ввести валидный пароль для корректного проведения тестирования
+                .inputLogin(loginRZD)
+                .inputPassword(passwordRZD) // Нужно ввести валидный пароль для корректного проведения тестирования
                 .entryButtonClick()
                 .clickProfileButton()
                 .checkMyProfile("Чурин Дмитрий")
@@ -210,5 +213,11 @@ public class RegistrationAndLoginTest extends TestBase {
                 .checkMyProfile("Смена пароля")
 
                 .clickLogout();
+    }
+
+    @Test
+    @Tag("test")
+    void fakeTest() {
+        System.out.println("test");
     }
 }

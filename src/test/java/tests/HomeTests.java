@@ -10,9 +10,9 @@ import pages.PageWithHome;
 
 public class HomeTests extends TestBase {
 
-    String loginRZD = "swagoutbaby"; // Нужно ввести валидный логин для входа в аккаунт РЖД
-    String passwordRZD = "dubZgePMCKb5qvx"; // Нужно ввести валидный пароль для входа в аккаунт РЖД
-    String fioRZD = "Чурин Дмитрий Владимирович"; // Нужно ввести валидные данные для выбора пассажира
+    String loginRZD = ""; // Нужно ввести валидный логин для входа в аккаунт РЖД
+    String passwordRZD = ""; // Нужно ввести валидный пароль для входа в аккаунт РЖД
+    String fioRZD = ""; // Нужно ввести валидные данные для выбора пассажира
     String departureDateRZD = "8/25/2025";
     String returnDateRZD = "8/30/2025";
     String cityFromRZD = "Москва";
