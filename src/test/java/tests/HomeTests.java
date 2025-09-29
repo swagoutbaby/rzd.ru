@@ -10,13 +10,17 @@ import pages.PageWithHome;
 
 public class HomeTests extends TestBase {
 
-    String loginRZD = ""; // Нужно ввести валидный логин для входа в аккаунт РЖД
-    String passwordRZD = ""; // Нужно ввести валидный пароль для входа в аккаунт РЖД
-    String fioRZD = ""; // Нужно ввести валидные данные для выбора пассажира
-    String departureDateRZD = "8/25/2025";
-    String returnDateRZD = "8/30/2025";
-    String cityFromRZD = "Москва";
-    String cityToRZD = "Адлер";
+    /* Чтобы передать данные в переменную loginRZD, нужно создать файл config.properties в корневой папке
+     и в нем прописать данные в формате ключ=значение Например: email=vasya111@gmail.com */
+
+    config.Properties prop = new config.Properties();
+    private final String loginRZD = prop.getLoginRZD(); // Нужно ввести валидный логин для входа в аккаунт РЖД
+    private final String passwordRZD = prop.getPasswordRZD(); // Нужно ввести валидный пароль для входа в аккаунт РЖД
+    private final String fioRZD = prop.getFioRZD(); // Нужно ввести валидные данные для выбора пассажира
+    private final String departureDateRZD = "8/25/2025";
+    private final String returnDateRZD = "8/30/2025";
+    private final String cityFromRZD = "Москва";
+    private final String cityToRZD = "Адлер";
 
     PageWithHome pageWithHome = new PageWithHome();
 

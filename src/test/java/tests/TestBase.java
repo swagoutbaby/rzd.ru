@@ -18,7 +18,7 @@ public class TestBase {
     static void beforeAll() {
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager"; //стратегия загрузки, если страница долго грузится, с ее помощью мы не будем дожидаться полной загрузки страницы
-        Configuration.baseUrl = "https://github.com/"; //выносим основной сайт, а в тестах уже оставляем только конкретный путь к сайту
+        Configuration.baseUrl = "https://www.rzd.ru/"; //выносим основной сайт, а в тестах уже оставляем только конкретный путь к сайту
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub"; //для удаленного запуска
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(

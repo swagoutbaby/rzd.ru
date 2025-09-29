@@ -12,8 +12,8 @@ import utils.FakerUtil;
 
 public class RegistrationAndLoginTest extends TestBase {
 
-    String loginRZD = ""; // Нужно ввести валидный логин для входа в аккаунт РЖД
-    String passwordRZD = ""; // Нужно ввести валидный пароль для входа в аккаунт РЖД
+    private final String loginRZD = ""; // Нужно ввести валидный логин для входа в аккаунт РЖД
+    private final String passwordRZD = ""; // Нужно ввести валидный пароль для входа в аккаунт РЖД
 
     PageWithEntry pageWithEntry = new PageWithEntry();
     PageWithRegistration pageWithRegistration = new PageWithRegistration();

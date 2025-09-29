@@ -1,9 +1,9 @@
 {
   "base": {
     "logo": "rzd.png",
-    "project": "${JOB NAME}",
-    "environment": "${ENVIRONMENT}",
-    "comment": "${COMMENT}",
+    "project": "${JOB_NAME}",
+    "environment": "REGRESS UI HOME",
+    "comment": "@swagoutbaby",
     "reportLink": "${BUILD_URL}",
     "language": "en",
     "messenger": "telegram",
