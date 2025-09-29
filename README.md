@@ -55,3 +55,90 @@ Jenkins используется для автоматизации сборки 
 <p align="center">  
 <a href="https://jenkins.autotests.cloud/job/rzd.ru_UI_regress/"><img src="images/screenshots/jenkins-scrin.png" alt="Jenkins" width="950"/></a>  
 </p>
+
+
+### **Параметры сборки в Jenkins:**
+
+- browser – браузер, по умолчанию chrome
+- browserVersion – версия браузера, по умолчанию 122
+- browserSize – размер окна браузера, по умолчанию 1920x1080
+- remoteUrl – логин, пароль и адрес удаленного сервера Selenoid
+
+## Команды для запуска из терминала
+
+***Локальный запуск:***
+```bash  
+gradle regression_test
+
+```
+
+***Удаленный запуск в Jenkins:***
+```bash  
+regression_test
+```
+
+
+<a id="allure"></a>
+## <a href="https://allurereport.org/"><img height="25" src="images/icons/Allure.svg" width="25"/></a> <a name="Allure"></a>Allure [отчет](https://jenkins.autotests.cloud/job/rzd.ru_UI_regress/allure/)</a>
+
+Allure используется для генерации подробных отчетов о тестировании. Он предоставляет информацию о результатах тестов, включая графики и диаграммы, что помогает анализировать качество продукта и выявлять проблемные области.
+</p>
+
+### Главная страница
+
+<p align="center">  
+<img title="Allure Overview Dashboard" src="images/screenshots/allure.png" width="850">  
+</p>
+
+### Пример теста
+
+  <p align="center">  
+<img title="Allure Graphics" src="images/screenshots/allure1.png" width="850">
+</p>
+
+<a id="telegram"></a>
+## <a href="https://t.me/swagoutbaby"><img alt="Allure" height="25" src="images/icons/Telegram.svg" width="25"/></a> Интеграция с Telegram. Автоматические уведомления о сборке
+Настроены автоматические уведомления в Telegram для получения информации о статусе сборки и тестирования.
+
+<p align="center">  
+<img title="Allure Overview Dashboard" src="images/screenshots/telega-scrin.png" width="550">  
+</p>
+
+
+<a id="video"></a>
+## <img alt="Selenoid" height="25" src="images/icons/Selenoid.svg" width="25"/></a> Видеозаписи выполнения тестов в Selenoid 
+Помогают визуально проверять, как проходят тесты и выявлять проблемы.
+
+<p align="center">
+<img title="Selenoid Video" src="images/video/video.gif" width="550" height="350"  alt="video">   
+</p>
+
+
+<a id="other"></a>
+### Плагины
+- **java-library**: Плагин для работы с Java библиотеками.
+- **io.qameta.allure (версия 2.11.2)**: Плагин для интеграции с Allure для генерации отчетов.
+
+### Репозитории
+- **mavenCentral**: Репозиторий Maven Central для получения зависимостей.
+
+### Зависимости (Dependencies)
+- **Selenide (версия 7.9.4)**: Фреймворк для написания лаконичных и стабильных UI тестов на Java.
+- **JUnit 5 (версия 5.10.2)**: Фреймворк для модульного тестирования на Java.
+- **Java Faker (версия 1.0.2)**: Библиотека для генерации фейковых данных для тестирования.
+- **Allure Selenide (версия 2.27.0)**: Для интеграции Selenide с Allure для детализированных отчетов.
+- **SLF4J Simple (версия 2.0.7)**: Простая фасадная библиотека для логирования в Java.
+
+### Конфигурация
+- **Конфигурация Allure** для генерации отчетов и использования AspectJ Weaver.
+- **Конфигурация задач тестирования** для использования JUnit Platform и логирования определенных событий тестов.
+- Передача системных свойств в задачи тестирования.
+- Условное включение тегов тестов на основе системных свойств.
+
+### Классы помощники (Helper Classes)
+- **Attach**: Содержит методы для захвата скриншотов, исходного кода страницы, логов консоли браузера и встраивания видео в отчеты
+- Использованал Selenoid для удаленного запуска брузеров в Docker контейнерах
+
+### Интеграция с Telegram
+Была выполнена интеграция с Telegram для автоматической сборки (в Jenkins) и отправки отчетности в Telegram канал каждые 6 часов
+</p>
